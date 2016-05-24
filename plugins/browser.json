@@ -1,0 +1,34 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "dev.hti.group20.thermostat"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "dev.hti.group20.thermostat"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "dev.hti.group20.thermostat"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "dev.hti.group20.thermostat"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "dev.hti.group20.thermostat"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "dev.hti.group20.thermostat"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "dev.hti.group20.thermostat"
+        }
+    }
+}
