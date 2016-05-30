@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "description": "Description of your app",
-  "launch_path": "/index.html",
+  "name": "Thermostat",
+  "description": "Thermostat to control your temperatures",
+  "launch_path": "/www/index.html",
   "icons": {
     "128": "/img/logo.png"
   },
