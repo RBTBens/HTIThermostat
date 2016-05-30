@@ -6,8 +6,8 @@
     <name>HTIThermostat</name>
     <description>Thermostat to control your temperatures</description>
     <author email="r.b.t.bens@student.tue.nl" href="https://canvas.win.tue.nl/groups/128">HTI Group 20</author>
-    <content src="index.html" />
-    <icon src="icon.png" />
+    <content src="www/index.html" />
+    <icon src="www/icon.png" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
