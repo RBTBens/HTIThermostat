@@ -18,18 +18,13 @@ var app = {
     receivedEvent: function(id) {
 		if (id == "deviceready")
 		{
-			$(".status-indicator").removeClass("fa-times");
-			$(".status-indicator").addClass("fa-check");
-		}
-		else if (id == "computerready")
-		{
-			$(".status-indicator").removeClass("fa-times");
-			$(".status-indicator").addClass("fa-desktop");
+			$(".status-indicator").removeClass("fa-desktop");
+			$(".status-indicator").addClass("fa-mobile");
 		}
     }
 };
 
 $(document).ready(function() {
 	// this will get called on load regardless if it's a phone or not (for debugging on PC)
-	app.receivedEvent("computerready");
+	//app.receivedEvent("deviceready");
 });

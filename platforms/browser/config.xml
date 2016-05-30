@@ -4,8 +4,8 @@
         <param name="browser-package" value="Camera" />
     </feature>
     <name>HTIThermostat</name>
-    <description>Hello World sample application that responds to the deviceready event.</description>
-    <author email="support@phonegap.com" href="http://phonegap.com">PhoneGap Team</author>
+    <description>Thermostat to control your temperatures</description>
+    <author email="r.b.t.bens@student.tue.nl" href="https://canvas.win.tue.nl/groups/128">HTI Group 20</author>
     <content src="index.html" />
     <icon src="icon.png" />
     <access origin="*" />
