@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>My Website</title>
+	<script src='js/jquery-2.1.0.min.js'></script>
+	<script src='js/graph.js'></script>
+	<style type='text/css'>
+	h2 {background-color:orange;}
+	</style>
+  </head>
+  <body>
+	<div style="padding:5px">
+		<div style='float:right'>
+			<script type="text/javascript">
+			<!--
+			var currentTime = new Date()
+			var hours = currentTime.getHours()
+			var minutes = currentTime.getMinutes()
+			document.write(hours+":"+minutes);
+			//-->
+			</script>
+		</div>
+
+    <h2>Testing Web Service</h2>
+
+	<input id="getdata" type='button' value="GET Data" />
+	<input id="putdata" type='button' value="PUT Data" />
+
+	<p>Day: <span id="day"></span></p>
+	<p>Time: <span id="time"></span></p>
+	<p>Target Temperature: <span id="targetTemperature"></span></p>
+	<p>Current Temperature: <span id="currentTemperature"></span></p>
+	<p>Day Temperature: <span id="dayTemperature"></span></p>
+	<p>Night Temperature: <span id="nightTemperature"></span></p>
+	<p>Week Program State: <span id="weekProgramState"></span></p>
+	<p> Status is: <span id='status'></span></p>
+
+  </body>
+</html>

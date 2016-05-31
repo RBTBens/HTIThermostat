@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Thermostat</title>
+	<link rel="stylesheet" href="css/thermostat.css">
+	<link rel="stylesheet" href="css/week_overview.css">
+  </head>
+  <body>
+	  <div style="padding:5px">
+		  <h1>Current day</h1>
+
+		  <form action='ProcessData' method='GET'>
+			<input type='submit' value='Get time'>
+		  </form>
+
+		  <form action='ProcessData' method='POST'>
+		  	<input name='time' value='' >
+			<input type='submit' value='Post time'>
+		  </form>
+	  </div>
+  </body>
+</html>
