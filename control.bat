@@ -4,26 +4,31 @@
 echo Simple control panel for running PhoneGap commands
 echo.
 echo Available commands:
-echo - debug: Fires up the local server for debugging purposes
-echo - build: CURRENTLY UNAVAILABLE!
+echo - webserver: Fires up the local server for debugging purposes
+echo - build: Creates an APK file in /platforms/android/build/outputs/apk/
+echo - debug: Attempts to run the application on an emulated device
 echo - exit: Closes down
 echo.
 set /p cmd=Enter command: 
 
-IF %cmd%==debug GOTO debug
+IF %cmd%==webserver GOTO webserver
 IF %cmd%==build GOTO build
+IF %cmd%==debug GOTO debug
 exit
 
-:debug
+:webserver
 cls
-echo Press enter to launch the server!
-pause
 phonegap serve
 goto leave
 
 :build
 cls
-echo Hi2
+phonegap build android --release
+goto leave
+
+:debug
+cls
+phonegap run android --device
 goto leave
 
 :leave
