@@ -1,12 +1,12 @@
 # HTIThermostat
-Thermostat based on web API
+Thermostat built using PhoneGap
 
 How to use:
-1. Download Node.js from <https://nodejs.org/en/>
-2. Clone the Git repository
-3. Shift right click in the root of the git folder and click "Open command window here"
-4. Type `npm install -g phonegap@latest` to get the PhoneGap CLI
-6. Type `phonegap serve` to fire up the local server and connect to it on port 3000
+- Download Node.js from [here](https://nodejs.org/en/)
+- Clone the Git repository
+- Shift right click in the root of the git folder and click "Open command window here"
+- Type `npm install -g phonegap@latest` to get the PhoneGap CLI
+- Type `phonegap serve` to fire up the local server and connect to it on port 3000
 
 To-Do List:
 - [ ] Add an easy-to-use frontend structure for communicating with the thermostat
