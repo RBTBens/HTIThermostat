@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+* {margin:0px;padding:0px}
+body {}
+#screen {width:100%;height:100%;}
+
+.ui-content {height:600px;}
+
+#scheduler{width:450px;height:100%;}
+
+#scheduler ul {width:inherit;height:100%;list-style-type:none;}
+
+#scheduler > ul > li {width:inherit;height:14%;display:block;overflow:hidden;border-bottom:solid 1px #000;}
+
+#scheduler .day-container {float:left;display:block;width:20%;height:100%;}
+#scheduler .day-container .day {display:block;}
+#scheduler .day-container .day h1 {font-size:14px;text-align:right;margin-top:6px;margin-right:6px;}
+
+#scheduler .switch-container {width:80%;height:100%;display:block;background-color:#EEE;overflow:hidden;}
+#scheduler .switch-container h1 {font-size:16px;text-align:right;}
+
+#scheduler .switch-container .switch-inner {width:100%;height:100%;position:relative;}
+
+#scheduler .switch-container .switch-inner > ul {list-style-type:none;}
+#scheduler .switch-container .switch-inner > ul > li {float:left;height:100%;width:4.167%;}
+#scheduler .switch-container .switch-inner > ul > li:hover {background-color:#DFDFDF;}
+
+.switch-inner .switch {width:32px;height:32px;position:absolute;background-image:url(moon.png)}
