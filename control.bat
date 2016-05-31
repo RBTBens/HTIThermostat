@@ -6,7 +6,7 @@ echo.
 echo Available commands:
 echo - webserver: Fires up the local server for debugging purposes
 echo - build: Creates an APK file in /platforms/android/build/outputs/apk/
-echo - debug: Attempts to run the application on an emulated device
+echo - debug: Attempts to run the application the connected device
 echo - exit: Closes down
 echo.
 set /p cmd=Enter command: 
@@ -28,6 +28,8 @@ goto leave
 
 :debug
 cls
+echo Make sure to have your Android device connected via the ADB before proceeding!
+pause
 phonegap run android --device
 goto leave
 
