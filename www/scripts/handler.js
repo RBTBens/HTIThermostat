@@ -3,7 +3,7 @@ var app = {
 	// Variables
 	binds: [],
 	modules: [],
-	moduleHelper: { count: 0, list: {} },
+	moduleHelper: { count: 0, list: [] },
 	
 	// Constructor
     initialize: function() {
@@ -32,6 +32,7 @@ var app = {
 
 // Module binds
 app.binds["sidebar"] = "__lib";
+app.binds["sidebar-left"] = ".sidebar-left .sidebar-scroll";
 app.binds["sidebar-right"] = ".sidebar-right .sidebar-scroll";
 
 // Initializer
@@ -60,21 +61,20 @@ $(document).ready(function() {
 			if (++app.moduleHelper.count >= Object.keys(app.binds).length)
 			{
 				// Loop over each module
-				for (obj in app.moduleHelper.list)
+				for (i = 0; i < app.moduleHelper.list.length; i++)
 				{
-					console.log("Object: " + obj.id);
+					// Get the value pair
+					var pair = app.moduleHelper.list[i];
+					
 					// Get the stored data
-					var name = app.moduleHelper.list[obj];
-					var target = app.modules[name] || {};
+					var obj = app.modules[pair[0]] || {};
+					var target = app.modules[pair[1]] || {};
 					
 					// And find functions to copy
 					for (key in target)
 					{
 						if (key != "load" && $.isFunction(target[key]))
-						{
 							obj[key] = target[key];
-							console.log("From " + obj.id + " (" + key + ") to " + target.id + " (" + key + ")");
-						}
 					}
 				}
 				
@@ -92,14 +92,17 @@ $(document).ready(function() {
 						$(target + ' div[dynamic="replace"]').replaceWith(content);
 				}
 			}
+			
+			// Include extra scripts again
+			var src = "scripts/custom.js";
+			$('script[src="' + src + '"]').remove();
+			$('<script>').attr('src', src).appendTo('head');
 		});
 	}
 });
 
 // Helper functions
 app.moduleHelper.inherit = function(target, namespace) {
-	// Save the inheritance
-	app.moduleHelper.list[target] = namespace;
-	console.log(app.moduleHelper.list);
-	console.log(target.id);
+	// Save the link between the classes
+	app.moduleHelper.list.push([target, namespace]);
 }
