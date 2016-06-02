@@ -1,0 +1,70 @@
+// Add the object to our module array
+var obj = { id: "backend", lib: true };
+app.modules[obj.id] = obj;
+
+// Variables
+obj.groupId = 20;
+obj.url = "http://wwwis.win.tue.nl/2id40-ws/" + obj.groupId + "/";
+
+// Called when all scripts are ready
+obj.load = function() {}
+
+// Requests
+obj.requestThermostat = function() {
+	$.ajax({
+		type: "GET",
+		url: this.url,
+		dataType: "xml",
+		success: function(xml) {
+			$(xml).find("thermostat").children().each(function() {
+				var key = this.tagName;
+				var value = $(this).text();
+				
+				if (key == "week_program")
+				{
+					$(this).find("day").each(function() {
+						var day = $(this).attr("name");
+						$(this).children().each(function() {
+							console.log($(this).attr("type") + " - " + $(this).attr("state") + " -> " + $(this).text());
+						});
+					});
+				}
+				else
+					console.log("[" + key + "] -> " + value);
+			});
+		},
+		error: function(jq, txt, err) {
+			console.error("Error: " + err);
+		}
+	});
+}
+
+// Create
+obj.createThermostat = function() {
+	$.ajax({
+		type: "PUT",
+		url: this.url,
+		success: function(xml) {
+			var parse = $(xml).eq(0).text();
+			if (parse == "Created")
+				console.log("Thermostat created!");
+			else
+				console.log("Failed to create thermostat; it might already exist");
+		}
+	});
+}
+
+// Delete
+obj.deleteThermostat = function() {
+	$.ajax({
+		type: "DELETE",
+		url: this.url,
+		success: function(xml) {
+			var parse = $(xml).eq(0).text();
+			if (parse == "OK")
+				console.log("Thermostat deleted!");
+			else
+				console.log("Failed to delete thermostat; it might already be gone");
+		}
+	});
+}

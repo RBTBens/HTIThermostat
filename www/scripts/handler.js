@@ -31,11 +31,13 @@ var app = {
 };
 
 // Module binds
+app.binds["backend"] = "__lib";
 app.binds["sidebar"] = "__lib";
 app.binds["sidebar-left"] = ".sidebar-left .sidebar-scroll";
 app.binds["sidebar-right"] = ".sidebar-right .sidebar-scroll";
 
 // Initializer
+var gl = {};
 $(document).ready(function() {
 	// Load all modules
 	var path = "scripts/modules/";
@@ -84,19 +86,30 @@ $(document).ready(function() {
 					// Check the target
 					var target = app.binds[key];
 					if (target == "__lib")
+					{
+						if (app.modules[key].lib)
+						{
+							for (name in app.modules[key])
+							{
+								if (name != "load")
+									gl[name] = app.modules[key][name];
+							}
+						}
+						
 						continue;
+					}
 					
 					// Attempt to load module
 					var content = app.modules[key].load();
 					if (content)
 						$(target + ' div[dynamic="replace"]').replaceWith(content);
 				}
+				
+				// Include extra scripts again
+				var src = "scripts/custom.js";
+				$('script[src="' + src + '"]').remove();
+				$('<script>').attr('src', src).appendTo('head');
 			}
-			
-			// Include extra scripts again
-			var src = "scripts/custom.js";
-			$('script[src="' + src + '"]').remove();
-			$('<script>').attr('src', src).appendTo('head');
 		});
 	}
 });
