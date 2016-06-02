@@ -35,6 +35,7 @@ app.binds["backend"] = "__lib";
 app.binds["sidebar"] = "__lib";
 app.binds["sidebar-left"] = ".sidebar-left .sidebar-scroll";
 app.binds["sidebar-right"] = ".sidebar-right .sidebar-scroll";
+app.binds["strip-content"] = ".large-strip .strip-content";
 
 // Initializer
 var gl = {};
@@ -112,6 +113,21 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	// Load the slider
+	$("#slider-shape").roundSlider({
+		value: 20,
+		startAngle: 20,
+		endAngle: "+320",
+		radius: 70,
+		width: 10,
+		sliderType: "min-range",
+		handleSize: "34,10",
+		
+		create: function(e) {
+			$("#slider-shape").find(".rs-inner").css("background-color", $("#page-content").css("background-color"));
+		}
+	});
 });
 
 // Helper functions
