@@ -7,21 +7,12 @@ app.moduleHelper.inherit(obj.id, "sidebar");
 obj.load = function() {
 	this.beginTemplate();
 	
-	this.addDivider("LET'S GET SOCIAL");
+	this.addDivider("DEBUGGING");
 	this.addMenu();
-		this.addMenuItem("Facebook", "#", "facebook");
-		this.addMenuItem("Twitter", "#", "twitter");
-		this.addMenuItem("Google+", "#", "google-plus");
+		this.addMenuItem("Create Thermostat", "#func-createThermostat", "plus-circle");
+		this.addMenuItem("Delete Thermostat", "#func-deleteThermostat", "minus-circle");
+		this.addMenuItem("Request Thermostat", "#func-requestThermostat", "info-circle");
 	this.endMenu();
-	
-	this.addDivider("GET IN TOUCH");
-	this.addMenu();
-		this.addMenuItem("Call Us", "#", "phone");
-		this.addMenuItem("Fax Us", "#", "fax");
-		this.addMenuItem("Mail Us", "#", "envelope-o");
-	this.endMenu();
-	
-	this.addDivider("THE END");
-	
+
 	return this.endTemplate();
 }

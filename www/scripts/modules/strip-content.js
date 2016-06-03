@@ -9,7 +9,7 @@ obj.load = function() {
 		All content is in separate Javascript files, allowing easy modularity.\
 		This helps with Git and stimulates simultaneous group work!\
 	</p>\
-	<a class="large-strip-button" href="#">Ik vind mooi</a>';
+	<a class="large-strip-button" href="#example">Ik vind mooi</a>';
 
 	return data;
 }

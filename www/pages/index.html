@@ -1,0 +1,46 @@
+<div class="content">
+	<div class="container">
+		<div id="slider-shape"></div>
+	</div>
+
+	<div class="decoration"></div>
+</div>
+
+<div class="large-strip full-bottom">
+	<div class="strip-content">
+		<div dynamic="replace"></div>
+	</div>
+	
+	<div class="overlay"></div>
+	<img class="strip-image preload-image" data-original="images/pictures/7.jpg" alt="img" />
+</div>
+
+<div class="content">
+	<div class="decoration"></div>
+</div>
+
+<div class="footer">
+	<div class="footer-content">
+		<p class="footer-text">
+			Made by HTI Group 20<br />
+			Group members: Ralph Bens, Robert van Lente and Karsten Paulussen
+		</p>
+	</div>
+</div>
+
+<script type="text/javascript">
+	// Load the slider
+	$("#slider-shape").roundSlider({
+		value: 20,
+		startAngle: 20,
+		endAngle: "+320",
+		radius: 70,
+		width: 10,
+		sliderType: "min-range",
+		handleSize: "34,10",
+		
+		create: function(e) {
+			$("#slider-shape").find(".rs-inner").css("background-color", $("#page-content").css("background-color"));
+		}
+	});
+</script>

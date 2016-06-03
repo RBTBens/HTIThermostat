@@ -32,9 +32,11 @@ obj.requestThermostat = function() {
 				else
 					console.log("[" + key + "] -> " + value);
 			});
+			
+			navigator.notification.alert("Check your console for the data!");
 		},
 		error: function(jq, txt, err) {
-			console.error("Error: " + err);
+			navigator.notification.alert("Error: " + err);
 		}
 	});
 }
@@ -47,9 +49,9 @@ obj.createThermostat = function() {
 		success: function(xml) {
 			var parse = $(xml).eq(0).text();
 			if (parse == "Created")
-				console.log("Thermostat created!");
+				navigator.notification.alert("Thermostat created!");
 			else
-				console.log("Failed to create thermostat; it might already exist");
+				navigator.notification.alert("Failed to create thermostat; it might already exist");
 		}
 	});
 }
@@ -62,9 +64,9 @@ obj.deleteThermostat = function() {
 		success: function(xml) {
 			var parse = $(xml).eq(0).text();
 			if (parse == "OK")
-				console.log("Thermostat deleted!");
+				navigator.notification.alert("Thermostat deleted!");
 			else
-				console.log("Failed to delete thermostat; it might already be gone");
+				navigator.notification.alert("Failed to delete thermostat; it might already be gone");
 		}
 	});
 }

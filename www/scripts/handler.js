@@ -1,4 +1,5 @@
 // Main application object
+var gl = {};
 var app = {
 	// Variables
 	binds: [],
@@ -37,8 +38,81 @@ app.binds["sidebar-left"] = ".sidebar-left .sidebar-scroll";
 app.binds["sidebar-right"] = ".sidebar-right .sidebar-scroll";
 app.binds["strip-content"] = ".large-strip .strip-content";
 
+// Page requester
+app.requestPage = function(page) {
+	// Replace the #
+	page = page.replace("#", "");
+	
+	// Check if it's something
+	if (page == "")
+		return;
+	else if (page.indexOf("func-") > -1)
+	{
+		// Check if the function is part of the global library
+		var func = page.substring(page.indexOf("-") + 1, page.length);
+		if (gl[func])
+			gl[func]();
+		
+		return;
+	}
+	
+	// Fetch the data
+	$.ajax({
+		type: "GET",
+		url: "pages/" + page + ".html",
+		success: function(html) {
+			// Remove all current items except for header-mask
+			$("#page-content-scroll").children().each(function() {
+				if (!$(this).hasClass("header-mask"))
+					$(this).remove();
+			});
+			
+			// Add the new content
+			$("#page-content-scroll").append(html);
+			
+			// Load the page!
+			app.loadPage();
+		},
+		error: function(jq, txt, err) {
+			console.error("Error: " + err);
+		}
+	});
+}
+
+// Page loader
+app.loadPage = function() {
+	// Run the load function on each module
+	for (key in app.binds)
+	{
+		// Check the target
+		var target = app.binds[key];
+		if (target == "__lib")
+		{
+			if (app.modules[key].lib)
+			{
+				for (name in app.modules[key])
+				{
+					if (name != "load")
+						gl[name] = app.modules[key][name];
+				}
+			}
+			
+			continue;
+		}
+		
+		// Attempt to load module
+		var content = app.modules[key].load();
+		if (content)
+			$(target + ' div[dynamic="replace"]').replaceWith(content);
+	}
+	
+	// Include extra scripts again
+	var src = "scripts/custom.js";
+	$('script[src="' + src + '"]').remove();
+	$('<script>').attr('src', src).appendTo('head');
+}
+
 // Initializer
-var gl = {};
 $(document).ready(function() {
 	// Load all modules
 	var path = "scripts/modules/";
@@ -81,7 +155,7 @@ $(document).ready(function() {
 					}
 				}
 				
-				// Run the load function on each module
+				// Load all libraries into gl
 				for (key in app.binds)
 				{
 					// Check the target
@@ -96,38 +170,19 @@ $(document).ready(function() {
 									gl[name] = app.modules[key][name];
 							}
 						}
-						
-						continue;
 					}
-					
-					// Attempt to load module
-					var content = app.modules[key].load();
-					if (content)
-						$(target + ' div[dynamic="replace"]').replaceWith(content);
 				}
 				
-				// Include extra scripts again
-				var src = "scripts/custom.js";
-				$('script[src="' + src + '"]').remove();
-				$('<script>').attr('src', src).appendTo('head');
+				// Run index load
+				app.requestPage("#index");
 			}
 		});
 	}
-	
-	// Load the slider
-	$("#slider-shape").roundSlider({
-		value: 20,
-		startAngle: 20,
-		endAngle: "+320",
-		radius: 70,
-		width: 10,
-		sliderType: "min-range",
-		handleSize: "34,10",
-		
-		create: function(e) {
-			$("#slider-shape").find(".rs-inner").css("background-color", $("#page-content").css("background-color"));
-		}
-	});
+});
+
+// Linking
+$(window).bind("hashchange", function() {
+	app.requestPage(window.location.hash);
 });
 
 // Helper functions
