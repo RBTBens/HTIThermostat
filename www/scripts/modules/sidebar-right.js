@@ -9,9 +9,9 @@ obj.load = function() {
 	
 	this.addDivider("DEBUGGING");
 	this.addMenu();
-		this.addMenuItem("Create Thermostat", "#func-createThermostat", "plus-circle");
-		this.addMenuItem("Delete Thermostat", "#func-deleteThermostat", "minus-circle");
-		this.addMenuItem("Request Thermostat", "#func-requestThermostat", "info-circle");
+		this.addMenuItem("Create Thermostat", "#this-createThermostat", "plus-circle");
+		this.addMenuItem("Delete Thermostat", "#this-deleteThermostat", "minus-circle");
+		this.addMenuItem("Request Thermostat", "#this-requestThermostat", "info-circle");
 	this.endMenu();
 
 	return this.endTemplate();

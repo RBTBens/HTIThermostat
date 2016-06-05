@@ -8,7 +8,10 @@ obj.load = function() {
 	this.beginTemplate();
 	
 	this.addMenu();
-		this.addMenuItem("Homepage", "index.html", "home", true);
+		this.addMenuItem("Homepage", "", "home", true);
+		this.addMenuItem("Original theme", "http://enableds.com/products/bolt/dark/index.html", "file-o", false, false);
+		
+		/*
 		this.addSubMenu("Features", "cog");
 			this.addSubMenuItem("Typography", "features-typography.html");
 			this.addSubMenuItem("Tabs", "features-tabs.html");
@@ -82,7 +85,9 @@ obj.load = function() {
 		this.addMenuItem("Videos", "page-videos.html", "youtube-play");
 		this.addMenuItem("Sitemap", "page-sitemap.html", "navicon");
 		this.addMenuItem("Contact", "contact.html", "envelope-o");
-		this.addMenuItem("Close", "#", "times", false, true);
+		*/
+		
+		this.addMenuItem("Close", "#this", "times", false, true);
 	this.endMenu();
 
 	return this.endTemplate();

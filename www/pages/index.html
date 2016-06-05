@@ -40,7 +40,9 @@
 		handleSize: "34,10",
 		
 		create: function(e) {
-			$("#slider-shape").find(".rs-inner").css("background-color", $("#page-content").css("background-color"));
+			// These properties are now changed in the CSS file, however, this function will still be needed for the callback to act with other objects on the page
+			// $("#slider-shape").find(".rs-bg-color").css("background-color", $("#page-content").css("background-color"));
+			// $("#slider-shape").find(".rs-range-color").css("background-color", "#c0392b");
 		}
 	});
 </script>

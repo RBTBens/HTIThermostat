@@ -29,6 +29,32 @@ $(window).load(function() {
 			t = $(window).height();
 		$(".map-fullscreen iframe").css("width", e), $(".map-fullscreen iframe").css("height", t)
 	}
+	
+	function w() {
+		$("a").each(function() {
+			var href = $(this).attr("href");
+			if (href == "#this")
+			{
+				$(this).removeAttr("href");
+			}
+			else if (href.substring(0, 6) == "#this-")
+			{
+				var func = href.substring(href.indexOf("-") + 1, href.length);
+				var par1 = func.indexOf("(");
+				var par2 = func.indexOf(")");
+				var para = "()";
+				
+				if (par1 > -1 && par2 > -1)
+				{
+					para = func.substring(par1, par2 + 1);
+					func = func.substring(0, par1);
+				}
+				
+				$(this).attr("href", "javascript:gl['" + func + "']" + para);
+			}
+		});
+	}
+	
 	if ($(function() {
 			FastClick.attach(document.body)
 		}), $(function() {
@@ -262,10 +288,10 @@ $(window).load(function() {
 		})
 	}), $("#copyright-year")[0] && document.getElementById("copyright-year").appendChild(document.createTextNode((new Date).getFullYear()));
 	var h = {
-			bg: "#e74c3c",
+			bg: "#c0392b", // e74c3c
 			target: document.getElementById("myDivId"),
 			id: "mynano"
 		},
 		v = new Nanobar(h);
-	v.go(30), v.go(100)
+	v.go(30), v.go(100), w();
 });

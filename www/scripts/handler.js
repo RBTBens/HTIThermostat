@@ -5,6 +5,7 @@ var app = {
 	binds: [],
 	modules: [],
 	moduleHelper: { count: 0, list: [] },
+	currentPage: "index",
 	
 	// Constructor
     initialize: function() {
@@ -45,17 +46,8 @@ app.requestPage = function(page) {
 	
 	// Check if it's something
 	if (page == "")
-		return;
-	else if (page.indexOf("func-") > -1)
-	{
-		// Check if the function is part of the global library
-		var func = page.substring(page.indexOf("-") + 1, page.length);
-		if (gl[func])
-			gl[func]();
-		
-		return;
-	}
-	
+		page = "index";
+
 	// Fetch the data
 	$.ajax({
 		type: "GET",
@@ -87,29 +79,18 @@ app.loadPage = function() {
 		// Check the target
 		var target = app.binds[key];
 		if (target == "__lib")
-		{
-			if (app.modules[key].lib)
-			{
-				for (name in app.modules[key])
-				{
-					if (name != "load")
-						gl[name] = app.modules[key][name];
-				}
-			}
-			
 			continue;
-		}
 		
 		// Attempt to load module
 		var content = app.modules[key].load();
 		if (content)
-			$(target + ' div[dynamic="replace"]').replaceWith(content);
+			$(target + " div[dynamic=\"replace\"]").replaceWith(content);
 	}
 	
 	// Include extra scripts again
 	var src = "scripts/custom.js";
-	$('script[src="' + src + '"]').remove();
-	$('<script>').attr('src', src).appendTo('head');
+	$("script[src=\"" + src + "\"]").remove();
+	$("<script>").attr("src", src).appendTo("head");
 }
 
 // Initializer
