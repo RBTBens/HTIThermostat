@@ -4,19 +4,22 @@
 echo Simple control panel for running PhoneGap commands
 echo.
 echo Available commands:
-echo - webserver: Fires up the local server for debugging purposes
+echo - start: Fires up the local server for debugging purposes
 echo - build: Creates an APK file in /platforms/android/build/outputs/apk/
 echo - debug: Attempts to run the application the connected device
+echo - update: Updates the PhoneGap installation
 echo - exit: Closes down
 echo.
 set /p cmd=Enter command: 
 
-IF %cmd%==webserver GOTO webserver
+IF %cmd%==start GOTO start
+IF %cmd%==webserver GOTO start
 IF %cmd%==build GOTO build
 IF %cmd%==debug GOTO debug
+IF %cmd%==update GOTO update
 exit
 
-:webserver
+:start
 cls
 phonegap serve
 goto leave
@@ -31,6 +34,12 @@ cls
 echo Make sure to have your Android device connected via the ADB before proceeding!
 pause
 phonegap run android --device
+goto leave
+
+:update
+cls
+echo Updating PhoneGap!
+npm update -g phonegap
 goto leave
 
 :leave

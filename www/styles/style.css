@@ -139,11 +139,11 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	width: 100%
+	width: 100%;
 }
 
 .large-strip .overlay {
-	background-color: rgba(0, 0, 0, .2);
+	background-color: rgba(0, 0, 0, .8);
 	position: absolute;
 	top: 0;
 	bottom: 0;

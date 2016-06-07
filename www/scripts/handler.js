@@ -37,7 +37,7 @@ app.binds["backend"] = "__lib";
 app.binds["sidebar"] = "__lib";
 app.binds["sidebar-left"] = ".sidebar-left .sidebar-scroll";
 app.binds["sidebar-right"] = ".sidebar-right .sidebar-scroll";
-app.binds["strip-content"] = ".large-strip .strip-content";
+app.binds["time-indicator"] = ".large-strip.time-indicator";
 
 // Page requester
 app.requestPage = function(page) {
