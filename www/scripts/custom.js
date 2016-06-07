@@ -34,9 +34,10 @@ $(window).load(function() {
 		$("a").each(function() {
 			var href = $(this).attr("href");
 			if (!href)
-				continue;
-			
-			if (href == "#this")
+			{
+				
+			}
+			else if (href == "#this")
 			{
 				$(this).removeAttr("href");
 			}
