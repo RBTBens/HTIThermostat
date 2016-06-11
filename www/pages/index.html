@@ -35,6 +35,9 @@
 		radius: 70,
 		width: 20,
 		sliderType: "min-range",
-		handleSize: "34,10"
+		handleSize: "34,10",
+		tooltipFormat: function(args) {
+			return args.value + " &deg;C";
+		}
 	});
 </script>

@@ -156,7 +156,8 @@ $(document).ready(function() {
 				}
 				
 				// Run index load
-				app.requestPage("#index");
+				var loc = window.location.hash;
+				app.requestPage(loc == "" ? "#index" : loc);
 			}
 		});
 	}

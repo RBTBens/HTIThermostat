@@ -14,7 +14,7 @@ obj.load = function() {
 	<div class="overlay"></div>\
 	<img class="strip-image" src="images/pictures/day.jpg" alt="img" />';
 	
-	obj.loadThermostatState();
+	this.loadThermostatState();
 
 	return data;
 }
