@@ -21,7 +21,7 @@ var URL_NIGHT = "images/scheduler/moon.png";
 function createSwitch(pos) {
 	var sw = $(document.createElement("div")).attr("class", "switch").append($(document.createElement("img")).attr("src", URL_NIGHT));
 	sw.css("left", pos);
-	sw.on("dblclick", function(e) {
+	sw.on("tap", function(e) {
         $(this).remove();
     });
 	
@@ -50,7 +50,7 @@ $(document).ready(function(e) {
 	}
 	
 	$(".switch-inner").each(function(day, element) {
-        $(this).click(function(e) {
+        $(this).on("doubletap", function(e) {
 			if ($(".switch", this).length < 5) {
 				var pos = e.pageX - $(this).offset().left - (SWITCH_WIDTH / 2);
 
