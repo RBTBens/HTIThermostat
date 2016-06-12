@@ -11,11 +11,7 @@ var days = {
 	Su: 6
 }
 
-var DAY = 0;
-var NIGHT = 1;
 var SWITCH_WIDTH;
-
-var SWITCH_WIDTH = 0;
 var SWITCH_COUNT = 10;
 
 var URL_DAY = "images/scheduler/sun.png";
@@ -25,7 +21,7 @@ function createSwitch(pos) {
 	var sw = $(document.createElement("div")).attr("class", "switch").append($(document.createElement("img")));
 	sw.css("left", pos).width(SWITCH_WIDTH);
 	sw.on("tap", function(e) {
-		if (!selecting) $(this).remove();
+		$(this).remove();
     });
 	sw.on("taphold", function(e) {
 		$(this).css("background-color","#069");
@@ -73,7 +69,7 @@ $(document).ready(function(e) {
 	SWITCH_WIDTH = $(".switch-inner:first").height()/4;
 	
 	$(".switch-inner").each(function(day) {
-        $(this).on("tap", function(e) {
+        $(this).on("doubletap", function(e) {
 			
 			var sws = $(".switch", this);
 			
