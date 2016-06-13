@@ -63,25 +63,25 @@ function update() {
 }
 
 // Switch container click handler
-function onContainerClick(self, container, day, e) {
-	var sws = $(".switch", self);
+function onContainerClick(container, day, e) {
+	var sws = $(".switch", container);
 	if (sws.length < SWITCH_COUNT) {
-		var pos = e.pageX - container.offset().left - (SWITCH_WIDTH / 2);
+		var pos = e.pageX - $(container).offset().left - (SWITCH_WIDTH / 2);
 		if (checkFree(day, pos) == true) {
 			if (sws.length > 0) {
 				var b = false;
 				sws.each(function() {
-					if (pos < container.position().left) {
+					if (pos < $(this).position().left) {
 						b = true;
-						container.before(createSwitch(pos));
+						$(this).before(createSwitch(pos));
 						return false;
 					}
 				});
 				
 				if (!b)
-					container.append(createSwitch(pos));
+					$(container).append(createSwitch(pos));
 			} else {
-				container.append(createSwitch(pos));
+				$(container).append(createSwitch(pos));
 			}
 			
 			update();
@@ -100,15 +100,14 @@ $(document).ready(function(e) {
 		$(".day-list").append(item);
 	}
 	
-	// Determine switch width
+	// Determine switch width (4 = ratio height:width)
 	SWITCH_WIDTH = $(".switch-inner:first").height() / 4;
 	
 	// Go over the switches
 	$(".switch-inner").each(function(day) {
-		var container = $(this);
-        container.on("doubletap", function(e) { onContainerClick(this, container, day, e); });
-		
 		if (!app.isMobile)
-			container.on("click", function(e) { onContainerClick(this, container, day, e); });
+			$(this).on("click", function(e) { onContainerClick(this, day, e); });
+		else 
+			$(this).on("doubletap", function(e) { onContainerClick(this, day, e); });
     });
 });
