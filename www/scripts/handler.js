@@ -6,6 +6,7 @@ var app = {
 	modules: [],
 	moduleHelper: { count: 0, list: [] },
 	currentPage: "index",
+	isMobile: document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1,
 	
 	// Constructor
     initialize: function() {

@@ -9,6 +9,7 @@ obj.load = function() {
 	
 	this.addMenu();
 		this.addMenuItem("Homepage", "", "home", true);
+		this.addMenuItem("Scheduler", "#scheduler", "calendar");
 		this.addMenuItem("Original theme", "http://enableds.com/products/bolt/dark/index.html", "file-o", false, false);
 		
 		/*
