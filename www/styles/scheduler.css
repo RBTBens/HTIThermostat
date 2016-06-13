@@ -8,7 +8,8 @@
 
 #scheduler ul.day-list {width:inherit;height:100%;list-style-type:none;padding:0px;margin:0px;}
 
-#scheduler ul.day-list li {width:inherit;height:14%;margin:0px;display:block;overflow:hidden;border-bottom:solid 1px #000;}
+#scheduler ul.day-list li {width:inherit;height:14%;margin:0px;display:block;overflow:hidden;border-bottom:solid 1px #666;}
+#scheduler ul.day-list li:first {border-top:solid 1px #666;}
 
 #scheduler .day-container {float:left;display:block;width:8%;height:100%;}
 #scheduler .day-container .day {display:block;}
@@ -19,5 +20,8 @@
 
 #scheduler .switch-container .switch-inner {width:100%;height:100%;position:relative;}
 
-.switch-inner .switch {display:block;position:absolute;height:100%;}
-.switch-inner .switch img {display:block;width:auto;height:inherit;}
+.switch-inner .switch {position:absolute;height:100%;}
+.switch-inner .switch > img {width:auto;height:inherit;}
+
+.switch-inner .switch .options {width:100%;position:absolute;top:0;}
+.switch-inner .switch .options .remove-button {dislay:block;width:20px;height:20px;background-color:#F00;}

@@ -13,6 +13,8 @@ var days = {
 var SWITCH_WIDTH;
 var SWITCH_COUNT = 10;
 
+var EDITING = false;
+
 // Images
 var URL_DAY = "images/scheduler/sun.png";
 var URL_NIGHT = "images/scheduler/moon.png";
@@ -25,15 +27,43 @@ function createSwitch(pos) {
 	
 	// Make sure the items aren't instantly removed after being spawned
 	setTimeout(function(){
-		sw.on("tap", function(e) {
+		sw.on("doubletap", function(e) {
 			$(this).remove();
 		});
 		sw.on("taphold", function(e) {
-			$(this).css("background-color", "#069");
+			if ($(".options",this).length > 0) {
+				$(".options",this).remove();
+				EDITING = false;
+			}
+			else {
+				if (!EDITING) {
+					$(this).append(createSwitchMenu($(this)));
+					EDITING = true;
+				}
+			}
 		});
 	}, 100);
 	
 	return sw;
+}
+
+// Create an option menu around a switch
+function createSwitchMenu(sw) {
+	var m = $(document.createElement("div")).attr("class","options");
+	
+	var rb = $(document.createElement("div")).attr("class","remove-button").on("tap", function(e) {
+		sw.remove();
+		EDITING = false;
+	});
+	
+	var RB_HEIGHT = 20;
+	var RB_WIDTH = 20;
+	
+	rb.css("top",sw.height() - RB_HEIGHT).css("left",(SWITCH_WIDTH - RB_WIDTH) / 2);
+	
+	m.append(rb);
+	
+	return m;
 }
 
 // Check if we can actually place it here
@@ -89,25 +119,33 @@ function onContainerClick(container, day, e) {
 	}
 }
 
+// Fill up the container with alll days
+for (var day in days) {
+	var item = $("<li></li>");
+	item.append("<div class=\"day-container\"><div class=\"day\"><h1>" + day + "</h1></div></div>");
+	item.append("<div class=\"switch-container\"><div class=\"switch-inner\"></div></div>");
+	
+	$(".day-list").append(item);
+}
+
 // When the document is ready
 $(document).ready(function(e) {
-	// Fill up the container with alll days
-	for (var day in days) {
-		var item = $("<li></li>");
-		item.append("<div class=\"day-container\"><div class=\"day\"><h1>" + day + "</h1></div></div>");
-		item.append("<div class=\"switch-container\"><div class=\"switch-inner\"></div></div>");
-		
-		$(".day-list").append(item);
-	}
 	
 	// Determine switch width (4 = ratio height:width)
-	SWITCH_WIDTH = $(".switch-inner:first").height() / 4;
+	// Timeout fixes bug where height() is 0.
+	setTimeout(function() {
+		SWITCH_WIDTH = $(".switch-inner:first").height() / 4;
+	}, 1);
 	
 	// Go over the switches
 	$(".switch-inner").each(function(day) {
 		if (!app.isMobile)
-			$(this).on("click", function(e) { onContainerClick(this, day, e); });
+			$(this).on("click", function(e) {
+				if (!EDITING) onContainerClick(this, day, e); 
+			});
 		else 
-			$(this).on("doubletap", function(e) { onContainerClick(this, day, e); });
+			$(this).on("doubletap", function(e) {
+				if (!EDITING) onContainerClick(this, day, e); 
+			});
     });
 });
