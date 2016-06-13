@@ -1,6 +1,7 @@
 <div class="content">
 	<div class="container">
 		<div id="slider-shape"></div>
+		<div id="date_time"></div>
 	</div>
 
 	<div class="decoration"></div>
@@ -24,6 +25,7 @@
 </div>
 
 <script type="text/javascript">
+
 	// Load the slider
 	$("#slider-shape").roundSlider({
 		value: 21,
@@ -40,4 +42,6 @@
 			return args.value + " &deg;C";
 		}
 	});
+	
+	window.onload = date_time('date_time');
 </script>
