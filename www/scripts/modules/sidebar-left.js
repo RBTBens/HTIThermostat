@@ -8,9 +8,9 @@ obj.load = function() {
 	this.beginTemplate();
 	
 	this.addMenu();
-		this.addMenuItem("Homepage", "", "home", true);
+		this.addMenuItem("Homepage", "#index", "home");
 		this.addMenuItem("Scheduler", "#scheduler", "calendar");
-		this.addMenuItem("Original theme", "http://enableds.com/products/bolt/dark/index.html", "file-o", false, false);
+		this.addMenuItem("Original theme", "http://enableds.com/products/bolt/dark/index.html", "file-o");
 		
 		/*
 		this.addSubMenu("Features", "cog");
@@ -88,7 +88,7 @@ obj.load = function() {
 		this.addMenuItem("Contact", "contact.html", "envelope-o");
 		*/
 		
-		this.addMenuItem("Close", "#this", "times", false, true);
+		this.addMenuItem("Close", "#this", "times", true);
 	this.endMenu();
 
 	return this.endTemplate();

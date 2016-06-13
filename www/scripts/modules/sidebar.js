@@ -16,8 +16,8 @@ obj.addDivider = function(txt) {
 obj.addMenu = function() {
 	this.template += '<div class="sidebar-menu">';
 }
-obj.addMenuItem = function(name, target, icon, active, close) {
-	this.template += '<a class="' + (close ? 'close-sidebar ' : '') + 'menu-item' + (active ? ' active-item' : '') + '" href="' + target + '">';
+obj.addMenuItem = function(name, target, icon, close) {
+	this.template += '<a class="' + (close ? 'close-sidebar ' : '') + 'menu-item" href="' + target + '" onclick="onMenuClick(this)">';
 	this.template += '<i class="fa fa-' + icon + '"></i>' + name + '<i class="fa fa-circle"></i></a>';
 }
 obj.addSubMenu = function(name, icon) {
@@ -31,4 +31,13 @@ obj.endMenu = function() {
 }
 obj.endSubMenu = function() {
 	this.template += '</div></div>';
+}
+
+// Item clicking
+function onMenuClick(obj) {
+	$(".menu-item").each(function() {
+		$(this).removeClass("active-item");
+	});
+	
+	$(obj).addClass("active-item");
 }

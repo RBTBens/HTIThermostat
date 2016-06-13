@@ -35,7 +35,7 @@ $(window).load(function() {
 			var href = $(this).attr("href");
 			if (!href)
 			{
-				
+				// Do nothing, ha!
 			}
 			else if (href == "#this")
 			{
@@ -82,90 +82,8 @@ $(window).load(function() {
 		var a = $(".active-submenu").find("a").length;
 		$(".active-submenu").addClass("active-submenu-" + a), $(".active-submenu").parent().find(".menu-item .fa-plus").addClass("rotate-icon")
 	}
-	setTimeout(function() {
-		$(".coverpage-slider").owlCarousel({
-			loop: !0,
-			margin: 0,
-			nav: !1,
-			items: 1
-		}), $(".single-item").owlCarousel({
-			autoplay: !0,
-			autoplayTimeout: 4e3,
-			loop: !0,
-			margin: 10,
-			nav: !0,
-			dots: !0,
-			responsive: {
-				0: {
-					items: 1
-				},
-				600: {
-					items: 1
-				},
-				1e3: {
-					items: 1
-				}
-			}
-		}), $(".home-next").click(function() {
-			$(".single-item").trigger("next.owl.carousel")
-		}), $(".home-prev").click(function() {
-			$(".single-item").trigger("prev.owl.carousel")
-		}), $(".double-item").owlCarousel({
-			autoplay: !0,
-			autoplayTimeout: 4e3,
-			loop: !0,
-			margin: 10,
-			lazyLoad: !0,
-			nav: !1,
-			dots: !1,
-			responsive: {
-				0: {
-					items: 1
-				},
-				600: {
-					items: 2
-				},
-				1e3: {
-					items: 2
-				}
-			}
-		}), $(".tripple-item").owlCarousel({
-			autoplay: !0,
-			autoplayTimeout: 4e3,
-			loop: !0,
-			margin: 10,
-			lazyLoad: !0,
-			nav: !1,
-			dots: !1,
-			responsive: {
-				0: {
-					items: 1
-				},
-				600: {
-					items: 3
-				},
-				1e3: {
-					items: 3
-				}
-			}
-		}), $(".store-slider, .product-slider").owlCarousel({
-			loop: !0,
-			margin: 10,
-			nav: !1,
-			dots: !1,
-			responsive: {
-				0: {
-					items: 1
-				},
-				600: {
-					items: 2
-				},
-				1e3: {
-					items: 2
-				}
-			}
-		})
-	}, .001), $(".switch-1").click(function() {
+	
+	$(".switch-1").click(function() {
 		return $(this).toggleClass("switch-1-on"), !1
 	}), $(".switch-2").click(function() {
 		return $(this).toggleClass("switch-2-on"), !1
