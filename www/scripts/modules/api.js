@@ -6,19 +6,6 @@ app.modules[obj.id] = obj;
 obj.groupId = 20;
 obj.url = "http://wwwis.win.tue.nl/2id40-ws/" + obj.groupId + "/";
 
-// Settings
-obj.state = true;
-obj.switches = 5;
-obj.program = {
-	Monday: [],
-	Tuesday: [],
-	Wednesday: [],
-	Thursday: [],
-	Friday: [],
-	Saturday: [],
-	Sunday: []
-};
-
 // Called when all scripts are ready
 obj.load = function() {}
 
@@ -57,61 +44,86 @@ obj.uploadData = function(address, xml) {
 
 /*
  *
- * Data interaction
+ * Thermostat Interaction
+ *
+*/
+
+// Requests thermostat
+obj.requestThermostat = function() {
+	$.ajax({
+		type: "GET",
+		url: this.url,
+		dataType: "xml",
+		success: function(xml) {
+			$(xml).find("thermostat").children().each(function() {
+				var key = this.tagName;
+				var value = $(this).text();
+				
+				if (key == "week_program")
+				{
+					$(this).find("day").each(function() {
+						var day = $(this).attr("name");
+						$(this).children().each(function() {
+							console.log($(this).attr("type") + " - " + $(this).attr("state") + " -> " + $(this).text());
+						});
+					});
+				}
+				else
+					console.log("[" + key + "] -> " + value);
+			});
+			
+			navigator.notification.alert("Check your console for the data!");
+		},
+		error: function(jq, txt, err) {
+			navigator.notification.alert("Error: " + err);
+		}
+	});
+}
+
+// Create thermostat
+obj.createThermostat = function() {
+	$.ajax({
+		type: "PUT",
+		url: this.url,
+		success: function(xml) {
+			var parse = $(xml).eq(0).text();
+			if (parse == "Created")
+				navigator.notification.alert("Thermostat created!");
+			else
+				navigator.notification.alert("Failed to create thermostat; it might already exist");
+		}
+	});
+}
+
+// Delete thermostat
+obj.deleteThermostat = function() {
+	$.ajax({
+		type: "DELETE",
+		url: this.url,
+		success: function(xml) {
+			var parse = $(xml).eq(0).text();
+			if (parse == "OK")
+				navigator.notification.alert("Thermostat deleted!");
+			else
+				navigator.notification.alert("Failed to delete thermostat; it might already be gone");
+		}
+	});
+}
+
+/*
+ *
+ * Week program interaction
  * 
 */
 
-// Get the current program
-obj.getProgram = function(day) {
-    return this.program[day];
-}
-
-// Sorts and merges the heating periods
-obj.sortMergeProgram = function(day) {
-    var program = this.getProgram(day);
-    program.sort(function(a, b){return parseTime(a[0])-parseTime(b[0])});
-    for (var i = 0; i < program.length - 1; i++) {
-        if (parseTime(program[i][1]) >= parseTime(program[i+1][0])) {
-            var start = (program[i][0]);
-            var end = (parseTime(program[i][1]) > parseTime(program[i+1][1])) ? program[i][1] : program[i+1][1];
-            program.splice(i, 2);
-            program.push([start, end]);
-            this.sortMergeProgram(day);
-            break;
-        }
-    }
-}
-
 // Gets the current week program
 obj.getWeekProgram = function() {
-	var program = this.program;
-	var getFunc = this.getProgram;
-    return this.requestData(
-        '/weekProgram',
-        function(data) {
-			console.log(data);
-			
-            $(data).find('day').each(function() {
-                var day = $(this).attr('name');
-                program[day] = [];
-                $(this).find('switch').each(function() {
-                    if ($(this).attr('state') == 'on') {
-                        if ($(this).attr('type') == 'day') {
-                            getFunc(day).push([$(this).text(), '00:00']);
-                        } else {
-                            getFunc(day)[getFunc(day).length - 1][1] = $(this).text();
-                        }
-                    }
-                })
-            });
-            return program;
-        }
-    );
+    return this.requestData('weekProgram', function(data) { return data; });
 }
 
 // Uploads a given week program
 obj.setWeekProgram = function(obj) {
-    this.uploadData('/weekProgram', obj);
+    this.uploadData('weekProgram', obj);
 }
 
 // Recreates the default week program
@@ -149,10 +161,5 @@ obj.setDefaultProgram = function() {
         program.appendChild(day);
     }
     doc.appendChild(program);
-    this.uploadData('/weekProgram', (new XMLSerializer()).serializeToString(doc));
-}
-
-// Simple time parsing function
-function parseTime(t) {
-    return parseFloat(t.substr(0,2)) + parseFloat(t.substr(3,2))/60;
+    this.uploadData('weekProgram', (new XMLSerializer()).serializeToString(doc));
 }

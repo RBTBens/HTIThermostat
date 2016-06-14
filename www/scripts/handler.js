@@ -34,7 +34,6 @@ var app = {
 
 // Module binds
 app.binds["api"] = "__lib";
-app.binds["backend"] = "__lib";
 app.binds["sidebar"] = "__lib";
 app.binds["sidebar-left"] = ".sidebar-left .sidebar-scroll";
 app.binds["sidebar-right"] = ".sidebar-right .sidebar-scroll";
