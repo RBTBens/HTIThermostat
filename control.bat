@@ -39,7 +39,7 @@ goto leave
 :update
 cls
 echo Updating PhoneGap!
-npm update -g phonegap
+npm i -g phonegap
 goto leave
 
 :leave

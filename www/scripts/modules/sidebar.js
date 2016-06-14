@@ -40,4 +40,6 @@ function onMenuClick(obj) {
 	});
 	
 	$(obj).addClass("active-item");
+	
+	$("#page-content, .header-fixed, .footer-fixed").removeClass("body-left body-right"), $(".sidebar-left, .sidebar-right, .sidebar-left-fix, .sidebar-right-fix").removeClass("active-sidebar-box"), $(".sidebar-tap-close").removeClass("active-tap-close"), $(".header-fixed").removeClass("hide-header");
 }

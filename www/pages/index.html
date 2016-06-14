@@ -8,7 +8,7 @@
 				</td>
 				<td>
 					<div id="slider-shape"></div><br />
-					<i id="control-time-indicator" class="fa fa-sun-o"></i><br />
+					Status: <i id="control-time-indicator" class="fa fa-sun-o"></i><br />
 					<div id="date_time"></div>
 				</td>
 				<td>
@@ -39,17 +39,6 @@
 			</label>
 		</div>
 	</div>
-
-	<div class="decoration"></div>
-</div>
-
-<div class="footer">
-	<div class="footer-content">
-		<p class="footer-text">
-			Made by HTI Group 20<br />
-			Group members: Ralph Bens, Robert van Lente and Karsten Paulussen
-		</p>
-	</div>
 </div>
 
 <script type="text/javascript">
@@ -69,17 +58,16 @@
 			return args.value + " &deg;C";
 		},
 		drag: function(args) {
-			var p = (args.value - args.options.min) / (args.options.max - args.options.min);
-			updateSliderColor(p);
+			updateSliderColor((args.value - args.options.min) / (args.options.max - args.options.min));
 		},
 		change: function(args) {
 			gl.setTargetTemperature(args.value);
+			updateSliderColor((args.value - args.options.min) / (args.options.max - args.options.min));
 		},
 		create: function(args) {
 			var value = gl.getTargetTemperature();
-			var p = (value - args.options.min) / (args.options.max - args.options.min);
 			this.setValue(value);
-			updateSliderColor(p);
+			updateSliderColor((value - args.options.min) / (args.options.max - args.options.min));
 		}
 	});
 	
@@ -91,13 +79,17 @@
 	function changeValue(dir) {
 		if (slider._isReadOnly) return;
 		slider.setValue(slider.getValue() + dir);
+		gl.setTargetTemperature(slider.getValue());
+		updateSliderColor((slider.getValue() - slider.options.min) / (slider.options.max - slider.options.min));
 	}
-	
+
 	// Change vacation mode
 	function changeMode(checkbox) {
 		if (checkbox.checked)
 		{
 			slider.disable();
+			slider.setValue(slider.options.min);
+			gl.setTargetTemperature(slider.getValue());
 			$(".temp-control").addClass("grayed");
 		}
 		else
@@ -114,6 +106,8 @@
 	
 	// Update the color
 	function updateSliderColor(p) {
+		if (!p && !slider) return;
+		p = p || (slider.getValue() - slider.options.min) / (slider.options.max - slider.options.min);
 		var lerp = function(a, b, p) { return (1 - p) * a + p * b; };
 		$(".rs-range-color").css("background-color", "rgb(" + Math.round(lerp(43, 192, p)) + "," + Math.round(lerp(178, 57, p)) + "," + Math.round(lerp(192, 43, p)) + ")");
 	}
