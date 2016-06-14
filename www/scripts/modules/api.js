@@ -33,7 +33,7 @@ obj.requestData = function(address, func) {
     var result;
     $.ajax({
         type: "get",
-        url: obj.url + address,
+        url: this.url + address,
         dataType: "xml",
         async: false,
         success: function(data) {
@@ -48,32 +48,12 @@ obj.requestData = function(address, func) {
 obj.uploadData = function(address, xml) {
     $.ajax({
         type: "put",
-        url: obj.url + address,
+        url: this.url + address,
         contentType: 'application/xml',
         data: xml,
         async: false
     });
 }
-
-// Retrieves data from the server as specified
-/* To-Do: Not used!
-function get(attribute_name, xml_tag) {
-    return obj.requestData(
-        "/"+attribute_name,
-        function(data) {
-            return $(data).find(xml_tag).text();
-        }
-    );
-}
-*/
-
-// Uploads data to the server as specified
-/* To-Do: Not currently used!
-function put(attribute_name, xml_tag, value){
-    obj.uploadData("/"+attribute_name, "<" + xml_tag + ">"+ value + "</" + xml_tag + ">");
-}
-*/
-
 
 /*
  *
@@ -82,18 +62,13 @@ function put(attribute_name, xml_tag, value){
 */
 
 // Get the current program
-function getProgram(day) {
-    return obj.program[day];
+obj.getProgram = function(day) {
+    return this.program[day];
 }
 
-
-
-
-
-/* Sorts the heating periods (the periods when the heating is on) and merges overlapping ones
-*/
-function sortMergeProgram(day) {
-    var program = getProgram(day);
+// Sorts and merges the heating periods
+obj.sortMergeProgram = function(day) {
+    var program = this.getProgram(day);
     program.sort(function(a, b){return parseTime(a[0])-parseTime(b[0])});
     for (var i = 0; i < program.length - 1; i++) {
         if (parseTime(program[i][1]) >= parseTime(program[i+1][0])) {
@@ -101,16 +76,15 @@ function sortMergeProgram(day) {
             var end = (parseTime(program[i][1]) > parseTime(program[i+1][1])) ? program[i][1] : program[i+1][1];
             program.splice(i, 2);
             program.push([start, end]);
-            sortMergeProgram(day);
+            this.sortMergeProgram(day);
             break;
         }
     }
 }
 
-/* Retrieves the week program
-*/
-function getWeekProgram() {
-    return obj.requestData(
+// Gets the current week program
+obj.getWeekProgram = function() {
+    return this.requestData(
         '/weekProgram',
         function(data) {
             $(data).find('day').each(function() {
@@ -119,9 +93,9 @@ function getWeekProgram() {
                 $(this).find('switch').each(function() {
                     if ($(this).attr('state') == 'on') {
                         if ($(this).attr('type') == 'day') {
-                            getProgram(day).push([$(this).text(), '00:00']);
+                            this.getProgram(day).push([$(this).text(), '00:00']);
                         } else {
-                            getProgram(day)[getProgram(day).length - 1][1] = $(this).text();
+                            this.getProgram(day)[this.getProgram(day).length - 1][1] = $(this).text();
                         }
                     }
                 })
@@ -131,15 +105,13 @@ function getWeekProgram() {
     );
 }
 
-/* Uploads the week program
-*/
-function setWeekProgram(obj) {
-    obj.uploadData('/weekProgram', obj);
+// Uploads a given week program
+obj.setWeekProgram = function(obj) {
+    this.uploadData('/weekProgram', obj);
 }
 
-/* Creates the default week program
-*/
-function setDefault() {
+// Recreates the default week program
+obj.setDefaultProgram = function() {
     var doc = document.implementation.createDocument(null, null, null);
     var program = doc.createElement('week_program');
     program.setAttribute('state', ProgramState ? 'on' : 'off');
@@ -173,29 +145,10 @@ function setDefault() {
         program.appendChild(day);
     }
     doc.appendChild(program);
-    obj.uploadData('/weekProgram', (new XMLSerializer()).serializeToString(doc));
+    this.uploadData('/weekProgram', (new XMLSerializer()).serializeToString(doc));
 }
 
+// Simple time parsing function
 function parseTime(t) {
     return parseFloat(t.substr(0,2)) + parseFloat(t.substr(3,2))/60;
-}
-
-/* Adds a heating period for a specific day
-*/
-function addPeriod(day, start, end) {
-    var program = getWeekProgram()[day];
-    program.push([start, end]);
-    sortMergeProgram(day);
-    setWeekProgram();
-}
-
-/* Removes a heating period from a specific day.
-   idx is the idex of the period with values from 0 to 4
-*/
-function removePeriod(day, idx) {
-    var program = getWeekProgram()[day];
-    var start = program[idx][0];
-    var end = program[idx][1];
-    program.splice(idx,1);
-    setWeekProgram();
 }
