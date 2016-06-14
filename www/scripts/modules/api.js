@@ -84,23 +84,27 @@ obj.sortMergeProgram = function(day) {
 
 // Gets the current week program
 obj.getWeekProgram = function() {
+	var program = this.program;
+	var getFunc = this.getProgram;
     return this.requestData(
         '/weekProgram',
         function(data) {
+			console.log(data);
+			
             $(data).find('day').each(function() {
                 var day = $(this).attr('name');
-                this.program[day] = [];
+                program[day] = [];
                 $(this).find('switch').each(function() {
                     if ($(this).attr('state') == 'on') {
                         if ($(this).attr('type') == 'day') {
-                            this.getProgram(day).push([$(this).text(), '00:00']);
+                            getFunc(day).push([$(this).text(), '00:00']);
                         } else {
-                            this.getProgram(day)[this.getProgram(day).length - 1][1] = $(this).text();
+                            getFunc(day)[getFunc(day).length - 1][1] = $(this).text();
                         }
                     }
                 })
             });
-            return this.program;
+            return program;
         }
     );
 }
