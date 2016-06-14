@@ -89,7 +89,7 @@ obj.getWeekProgram = function() {
         function(data) {
             $(data).find('day').each(function() {
                 var day = $(this).attr('name');
-                Program[day] = [];
+                this.program[day] = [];
                 $(this).find('switch').each(function() {
                     if ($(this).attr('state') == 'on') {
                         if ($(this).attr('type') == 'day') {
@@ -100,7 +100,7 @@ obj.getWeekProgram = function() {
                     }
                 })
             });
-            return Program;
+            return this.program;
         }
     );
 }
