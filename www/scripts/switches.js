@@ -82,8 +82,8 @@ function saveSwitches() {
 			d.append($("<switch>").attr("type","night").attr("state","off").text("00:00"));
 		}
 		
-		$(".switch", this).each(function() {
-			var sw = $("<switch>").attr("type", "0").attr("state", "on");
+		$(".switch", this).each(function(i) {
+			var sw = $("<switch>").attr("type", (i % 2 == 0)?("day"):("night")).attr("state", "on");
 			sw.text(ptot($(this).position().left));
 			d.append(sw);
 		});
