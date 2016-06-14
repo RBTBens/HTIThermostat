@@ -34,6 +34,7 @@ function ptot(pos) {
 	var h = Math.floor(t);
 	if (h < 10) h = "0" + h;
 	var m = Math.round((t - h) * 60);
+	if (m < 10) m = "0" + m;
 	return (h + ":" + m);
 }
 
@@ -63,24 +64,37 @@ function initSwitches(program) {
 // Creates program from switches
 function saveSwitches() {
 	
-	var program = $("<schedule>");
+	var program = $("<week_program>").attr("state","on");
 	
 	$(".switch-inner").each(function(day) {
-		
-		var day = $("<day>").attr("name",daysfull[day]);
+
+		var d = $("<day>").attr("name",daysfull[day]);
 		
 		var sws = $(".switch", this);
 		
+		var l = (10 - sws.length)/2;
+		
+		for (var i = 0; i < Math.floor(l); i++) {
+			d.append($("<switch>").attr("type","day").attr("state","off").text("00:00"));
+		}
+		
+		for (var i = 0; i < Math.ceil(l); i++) {
+			d.append($("<switch>").attr("type","night").attr("state","off").text("00:00"));
+		}
+		
 		$(".switch", this).each(function() {
-			var sw = $("<switch>").attr("type", "").attr("state", "on");
+			var sw = $("<switch>").attr("type", "0").attr("state", "on");
 			sw.text(ptot($(this).position().left));
-			day.append(sw);
+			d.append(sw);
 		});
 		
-		program.append(day);
+		program.append(d);
 	});
 	
-	// SEND TO SERVER
+	var xml = new XMLSerializer().serializeToString(program[0]);
+	console.log(xml);
+	//gl.setWeekProgram(xml);
+	
 }
 
 // Create a new switch
