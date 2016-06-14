@@ -1,7 +1,27 @@
 <div class="content">
 	<div class="container">
-		<div id="slider-shape"></div>
-		<div id="date_time"></div>
+		<table id="control-table">
+			<tr>
+				<td>
+					<i id="control-min" class="fa fa-minus temp-control" onclick="changeValue(-1);"></i><br /><br />
+					<i id="control-secondmin" class="fa fa-minus temp-control" onclick="changeValue(-0.1);"></i>
+				</td>
+				<td>
+					<div id="slider-shape"></div> <br />
+					<div id="date_time"></div>
+				</td>
+				<td>
+					<i id="control-plus" class="fa fa-plus temp-control" onclick="changeValue(1);"></i></i><br /><br />
+					<i id="control-secondplus" class="fa fa-plus temp-control" onclick="changeValue(0.1);">
+				</td>
+			</tr>
+		</table>
+		<div class="onoffswitch">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onclick="changeMode(this);">
+			<label class="onoffswitch-label" for="myonoffswitch">
+				<span class="onoffswitch-inner"></span>
+			</label>
+		</div>
 	</div>
 
 	<div class="decoration"></div>
@@ -30,7 +50,7 @@
 	$("#slider-shape").roundSlider({
 		value: 21,
 		min: 5,
-		max: 40,
+		max: 30,
 		step: 0.1,
 		startAngle: 20,
 		endAngle: "+320",
@@ -43,5 +63,26 @@
 		}
 	});
 	
+	// Date and time
 	window.onload = date_time('date_time');
+	
+	// Change slider
+	var slider = $("#slider-shape").data("roundSlider");
+	function changeValue(dir) {
+		if (slider._isReadOnly) return;
+		slider.setValue(slider.getValue() + dir);
+	}
+	
+	function changeMode(checkbox) {
+		if (checkbox.checked)
+		{
+			slider.disable();
+			$(".temp-control").addClass("grayed");
+		}
+		else
+		{
+			slider.enable();
+			$(".temp-control").removeClass("grayed");
+		}
+	}	
 </script>
