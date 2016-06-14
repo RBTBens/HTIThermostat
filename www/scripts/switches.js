@@ -30,7 +30,11 @@ function setWidths() {
 
 // Convert position to time
 function ptot(pos) {
-	return (pos/INNER_WIDTH)*24;
+	var t = (pos/INNER_WIDTH)*24;
+	var h = Math.floor(t);
+	if (h < 10) h = "0" + h;
+	var m = Math.round((t - h) * 60);
+	return (h + ":" + m);
 }
 
 // Convert time to position
@@ -38,7 +42,6 @@ function ttop(time) {
 	var p = time.indexOf(':');
 	var h = parseInt(time.substring(0, p));
 	var m = parseInt(time.substring(p+1, time.length));
-	
 	return (h/24 + m /1440) * INNER_WIDTH;
 }
 
@@ -142,7 +145,7 @@ $(document).ready(function(e) {
 	// Determine widths of containers
 	setTimeout(function() {
 		setWidths();
-		var xml = "<schedule><day name='Monday'><switch type='day' state='off'>0:00</switch><switch type='day' state='off'>00:00</switch><switch type='day' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='day' state='on'>7:00</switch><switch type='night' state='on'>8:00</switch><switch type='day' state='on'>12:00</switch><switch type='night' state='on'>14:00</switch></day><day name='Tuesday'><switch type='day' state='off'>0:00</switch><switch type='day' state='off'>00:00</switch><switch type='day' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='day' state='on'>7:00</switch><switch type='night' state='on'>8:00</switch><switch type='day' state='on'>12:00</switch><switch type='night' state='on'>14:00</switch></day></schedule>";
+		var xml = "<schedule><day name='Monday'><switch type='day' state='off'>0:00</switch><switch type='day' state='off'>00:00</switch><switch type='day' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='day' state='on'>7:25</switch><switch type='night' state='on'>8:30</switch><switch type='day' state='on'>12:42</switch><switch type='night' state='on'>14:19</switch></day></schedule>";
 		initSwitches($.parseXML(xml));
 	}, 1);
 		
