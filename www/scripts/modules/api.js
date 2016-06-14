@@ -133,57 +133,8 @@ function getWeekProgram() {
 
 /* Uploads the week program
 */
-function setWeekProgram() {
-    var doc = document.implementation.createDocument(null, null, null);
-    var program = doc.createElement('week_program');
-    program.setAttribute('state', ProgramState ? 'on' : 'off');
-    for (var key in Program) {
-        var day = doc.createElement('day');
-        day.setAttribute('name', key);
-
-        var daySwitches = [];
-        var nightSwitches = [];
-
-        var i, text, sw;
-        var periods = getProgram(key);
-        for (i = 0; i < periods.length; i++ ) {
-            daySwitches.push(periods[i][0]);
-            nightSwitches.push(periods[i][1]);
-        }
-
-        for (i = 0; i < obj.switches; i++) {
-            sw = doc.createElement('switch');
-            sw.setAttribute('type', 'day');
-
-            if (i < daySwitches.length) {
-                sw.setAttribute('state', 'on');
-                text = doc.createTextNode(daySwitches[i]);
-            } else {
-                sw.setAttribute('state', 'off');
-                text = doc.createTextNode('00:00');
-            }
-            sw.appendChild(text);
-            day.appendChild(sw);
-        }
-
-        for (i = 0; i < obj.switches; i++ ) {
-            sw = doc.createElement('switch');
-            sw.setAttribute('type', 'night');
-
-            if (i < nightSwitches.length) {
-                sw.setAttribute('state', 'on');
-                text = doc.createTextNode(nightSwitches[i]);
-            } else {
-                sw.setAttribute('state', 'off');
-                text = doc.createTextNode('00:00');
-            }
-            sw.appendChild(text);
-            day.appendChild(sw);
-        }
-        program.appendChild(day);
-    }
-    doc.appendChild(program);
-    obj.uploadData('/weekProgram', (new XMLSerializer()).serializeToString(doc));
+function setWeekProgram(obj) {
+    obj.uploadData('/weekProgram', obj);
 }
 
 /* Creates the default week program
