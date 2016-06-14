@@ -84,7 +84,7 @@ function saveSwitches() {
 		
 		$(".switch", this).each(function(i) {
 			var sw = $("<switch>").attr("type", (i % 2 == 0)?("day"):("night")).attr("state", "on");
-			sw.text(ptot($(this).position().left));
+			sw.text(ptot(parseInt($(this).css("left"))));
 			d.append(sw);
 		});
 		
@@ -92,9 +92,7 @@ function saveSwitches() {
 	});
 	
 	var xml = new XMLSerializer().serializeToString(program[0]);
-	console.log(xml);
-	//gl.setWeekProgram(xml);
-	
+	gl.setWeekProgram(xml);
 }
 
 // Create a new switch
@@ -159,8 +157,7 @@ $(document).ready(function(e) {
 	// Determine widths of containers
 	setTimeout(function() {
 		setWidths();
-		var xml = "<schedule><day name='Monday'><switch type='day' state='off'>0:00</switch><switch type='day' state='off'>00:00</switch><switch type='day' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='night' state='off'>00:00</switch><switch type='day' state='on'>7:25</switch><switch type='night' state='on'>8:30</switch><switch type='day' state='on'>12:42</switch><switch type='night' state='on'>14:19</switch></day></schedule>";
-		initSwitches($.parseXML(xml));
+		initSwitches(gl.getWeekProgram());
 	}, 1);
 		
 	// Also when sizes change
