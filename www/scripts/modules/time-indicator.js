@@ -6,9 +6,9 @@ app.modules[obj.id] = obj;
 obj.load = function() {
 	var data = '\
 	<div class="strip-content">\
-		<h1 class="center-text">Weather\'s looking great!</h1>\
-		<p class="center-text">Just kidding. It\'s raining.</p>\
-		<a class="large-strip-button" href="#example">More info</a>\
+		<h1 class="center-text">Settings</h1>\
+		<p class="center-text">Change thermostat settings.</p>\
+		<a class="large-strip-button" href="#scheduler">View week program</a>\
 	</div>\
 	\
 	<div class="overlay"></div>\

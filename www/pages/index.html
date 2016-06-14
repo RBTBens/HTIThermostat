@@ -7,31 +7,39 @@
 					<i id="control-secondmin" class="fa fa-minus temp-control" onclick="changeValue(-0.1);"></i>
 				</td>
 				<td>
-					<div id="slider-shape"></div> <br />
+					<div id="slider-shape"></div><br />
+					<i id="control-time-indicator" class="fa fa-sun-o"></i><br />
 					<div id="date_time"></div>
 				</td>
 				<td>
-					<i id="control-plus" class="fa fa-plus temp-control" onclick="changeValue(1);"></i></i><br /><br />
-					<i id="control-secondplus" class="fa fa-plus temp-control" onclick="changeValue(0.1);">
+					<i id="control-plus" class="fa fa-plus temp-control" onclick="changeValue(1);"></i><br /><br />
+					<i id="control-secondplus" class="fa fa-plus temp-control" onclick="changeValue(0.1);"></i>
 				</td>
 			</tr>
 		</table>
-		<div class="onoffswitch">
-			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onclick="changeMode(this);">
-			<label class="onoffswitch-label" for="myonoffswitch">
+		
+		<div class="onoffswitch goprogram">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="goprogram" onclick="window.location.hash='#scheduler';">
+			<label class="onoffswitch-label" for="goprogram">
+				<span class="onoffswitch-inner"></span>
+			</label>
+		</div>
+		
+		<div class="onoffswitch vacation" style="margin-top: 8px;">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="vacation" onclick="changeMode(this);">
+			<label class="onoffswitch-label" for="vacation">
+				<span class="onoffswitch-inner"></span>
+			</label>
+		</div>
+		
+		<div class="onoffswitch daynight" style="margin-top: 8px;">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="daynight" onclick="changeDayNight(this);">
+			<label class="onoffswitch-label" for="daynight">
 				<span class="onoffswitch-inner"></span>
 			</label>
 		</div>
 	</div>
 
-	<div class="decoration"></div>
-</div>
-
-<div class="large-strip full-bottom time-indicator">
-	<div dynamic="replace"></div>
-</div>
-
-<div class="content">
 	<div class="decoration"></div>
 </div>
 
@@ -60,6 +68,11 @@
 		handleSize: "34,10",
 		tooltipFormat: function(args) {
 			return args.value + " &deg;C";
+		},
+		drag: function(args) {
+			var p = (args.value - args.options.min) / (args.options.max - args.options.min);
+			var lerp = function(a, b, p) { return (1 - p) * a + p * b; };
+			$(".rs-range-color").css("background-color", "rgb(" + Math.round(lerp(43, 192, p)) + "," + Math.round(lerp(178, 57, p)) + "," + Math.round(lerp(192, 43, p)) + ")");
 		}
 	});
 	
@@ -85,4 +98,8 @@
 			$(".temp-control").removeClass("grayed");
 		}
 	}	
+	
+	function changeDayNight(checkbox) {
+		app.changeDayTime(!checkbox.checked);
+	}
 </script>

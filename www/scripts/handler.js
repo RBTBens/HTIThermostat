@@ -27,8 +27,7 @@ var app = {
     receivedEvent: function(id) {
 		if (id == "deviceready")
 		{
-			$(".status-indicator").removeClass("fa-desktop");
-			$(".status-indicator").addClass("fa-mobile");
+			
 		}
     }
 };
@@ -93,6 +92,26 @@ app.loadPage = function() {
 	var src = "scripts/custom.js";
 	$("script[src=\"" + src + "\"]").remove();
 	$("<script>").attr("src", src).appendTo("head");
+}
+
+// Time style changing
+app.changeDayTime = function(day) {
+	if (day)
+	{
+		$(".header-logo").css("color", "#1F1F1F");
+		$(".header-fixed").css("background-color", "#FFF");
+		$(".header-fixed").css("color", "#1F1F1F");
+		$(".header-fixed a").css("color", "#1F1F1F");
+		$("#control-time-indicator").removeClass("fa-moon-o").addClass("fa-sun-o");
+	}
+	else
+	{
+		$(".header-logo").css("color", "#FFF");
+		$(".header-fixed").css("background-color", "#3B3B3B");
+		$(".header-fixed").css("color", "#FFF");
+		$(".header-fixed a").css("color", "#FFF");
+		$("#control-time-indicator").removeClass("fa-sun-o").addClass("fa-moon-o");
+	}
 }
 
 // Initializer
