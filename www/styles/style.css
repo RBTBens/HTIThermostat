@@ -512,12 +512,13 @@
 	text-align: center;
 }
 
-.
+#control-time-indicator {
+	font-size: 22px;
+}
 
 .onoffswitch {
-    position: relative; width: 90px;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-	margin: 0 auto;
+	margin: 0 auto; margin-top: 5px;
 }
 .onoffswitch-checkbox {
     display: none;
@@ -536,12 +537,12 @@
     box-sizing: border-box;
 }
 .onoffswitch-inner:before {
-    content: "Vacation mode";
+    content: "";
     background-color: #34A7C1; color: #FFFFFF;
 	text-align: center;
 }
 .onoffswitch-inner:after {
-    content: "Week program";
+    content: "";
     background-color: #EEEEEE; color: #999999;
     text-align: center;
 }
@@ -559,3 +560,12 @@
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 10px; 
 }
+
+.goprogram .onoffswitch-inner:after { content: "View week program"; }
+.goprogram .onoffswitch-inner:before { content: "View week program"; }
+
+.vacation .onoffswitch-inner:after { content: "Enable vacation mode"; }
+.vacation .onoffswitch-inner:before { content: "Disable vacation mode"; }
+
+.daynight .onoffswitch-inner:after { content: "Change to night time"; }
+.daynight .onoffswitch-inner:before { content: "Change to day time"; }
