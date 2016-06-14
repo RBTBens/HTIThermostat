@@ -53,10 +53,9 @@
 </div>
 
 <script type="text/javascript">
-
 	// Load the slider
 	$("#slider-shape").roundSlider({
-		value: 21,
+		value: 0,
 		min: 5,
 		max: 30,
 		step: 0.1,
@@ -71,8 +70,16 @@
 		},
 		drag: function(args) {
 			var p = (args.value - args.options.min) / (args.options.max - args.options.min);
-			var lerp = function(a, b, p) { return (1 - p) * a + p * b; };
-			$(".rs-range-color").css("background-color", "rgb(" + Math.round(lerp(43, 192, p)) + "," + Math.round(lerp(178, 57, p)) + "," + Math.round(lerp(192, 43, p)) + ")");
+			updateSliderColor(p);
+		},
+		change: function(args) {
+			gl.setTargetTemperature(args.value);
+		},
+		create: function(args) {
+			var value = gl.getTargetTemperature();
+			var p = (value - args.options.min) / (args.options.max - args.options.min);
+			this.setValue(value);
+			updateSliderColor(p);
 		}
 	});
 	
@@ -86,6 +93,7 @@
 		slider.setValue(slider.getValue() + dir);
 	}
 	
+	// Change vacation mode
 	function changeMode(checkbox) {
 		if (checkbox.checked)
 		{
@@ -99,7 +107,14 @@
 		}
 	}	
 	
+	// Change layout
 	function changeDayNight(checkbox) {
 		app.changeDayTime(!checkbox.checked);
+	}
+	
+	// Update the color
+	function updateSliderColor(p) {
+		var lerp = function(a, b, p) { return (1 - p) * a + p * b; };
+		$(".rs-range-color").css("background-color", "rgb(" + Math.round(lerp(43, 192, p)) + "," + Math.round(lerp(178, 57, p)) + "," + Math.round(lerp(192, 43, p)) + ")");
 	}
 </script>

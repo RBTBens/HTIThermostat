@@ -42,6 +42,13 @@ obj.uploadData = function(address, xml) {
     });
 }
 
+// Change XML to be uploadable
+obj.parseXml = function(obj) {
+	var xml = (new XMLSerializer()).serializeToString(obj);
+	xml = xml.replace(' xmlns="http://www.w3.org/1999/xhtml"', '');
+	return xml;
+}
+
 /*
  *
  * Thermostat Interaction
@@ -110,6 +117,18 @@ obj.deleteThermostat = function() {
 	});
 }
 
+obj.getTargetTemperature = function() {
+    return this.requestData('targetTemperature', function(data) {
+		return parseFloat($(data).text());
+	});
+}
+
+obj.setTargetTemperature = function(value) {
+	var obj = $("<target_temperature>").text(value);
+	var xml = this.parseXml(obj[0]);
+	this.uploadData('targetTemperature', xml);
+}
+
 /*
  *
  * Week program interaction
@@ -124,42 +143,4 @@ obj.getWeekProgram = function() {
 // Uploads a given week program
 obj.setWeekProgram = function(obj) {
     this.uploadData('weekProgram', obj);
-}
-
-// Recreates the default week program
-obj.setDefaultProgram = function() {
-    var doc = document.implementation.createDocument(null, null, null);
-    var program = doc.createElement('week_program');
-    program.setAttribute('state', ProgramState ? 'on' : 'off');
-    for (var key in Program) {
-        var day = doc.createElement('day');
-        day.setAttribute('name', key);
-
-        var daySwitches = [];
-        var nightSwitches = [];
-
-        var i, text, sw;
-
-        for (i = 0; i < obj.switches; i++) {
-            sw = doc.createElement('switch');
-            sw.setAttribute('type', 'night');
-            sw.setAttribute('state', 'off');
-            text = doc.createTextNode('00:00');
-            sw.appendChild(text);
-            day.appendChild(sw);
-        }
-
-        for (i = 0; i < obj.switches; i++) {
-            sw = doc.createElement('switch');
-            sw.setAttribute('type', 'day');
-            sw.setAttribute('state', 'off');
-            text = doc.createTextNode('00:00');
-            sw.appendChild(text);
-            day.appendChild(sw);
-        }
-
-        program.appendChild(day);
-    }
-    doc.appendChild(program);
-    this.uploadData('weekProgram', (new XMLSerializer()).serializeToString(doc));
 }

@@ -63,15 +63,10 @@ function initSwitches(program) {
 
 // Creates program from switches
 function saveSwitches() {
-	
 	var program = $("<week_program>").attr("state","on");
-	
 	$(".switch-inner").each(function(day) {
-
 		var d = $("<day>").attr("name",daysfull[day]);
-		
 		var sws = $(".switch", this);
-		
 		var l = (10 - sws.length)/2;
 		
 		for (var i = 0; i < Math.floor(l); i++) {
@@ -91,7 +86,8 @@ function saveSwitches() {
 		program.append(d);
 	});
 	
-	var xml = new XMLSerializer().serializeToString(program[0]);
+	var xml = gl.parseXml(program[0]);
+	console.log(xml);
 	gl.setWeekProgram(xml);
 }
 
@@ -105,6 +101,7 @@ function createSwitch(pos) {
 	setTimeout(function(){
 		sw.on("doubletap", function(e) {
 			$(this).remove();
+			update();
 		});
 		sw.on("taphold", function(e) {
 			if ($(".options",this).length > 0) {
@@ -129,6 +126,7 @@ function createSwitchMenu(sw) {
 	
 	var rb = $(document.createElement("div")).attr("class","remove-button").on("tap", function(e) {
 		sw.remove();
+		update();
 		EDITING = false;
 	});
 	
@@ -229,4 +227,7 @@ function update() {
 			}
         });
     });
+	
+	// Save the switches
+	saveSwitches();
 }
