@@ -1,0 +1,42 @@
+<link rel="stylesheet" type="text/css" href="styles/schedule.css">
+
+<div id="schedule">
+	<table id="schedule-control">
+		<colgroup>
+			<col span="1" style="width: 20%;">
+			<col span="1" style="width: 60%;">
+			<col span="1" style="width: 20%;">
+		</colgroup>
+		<tr>
+			<td><i id="nav-icon" class="fa fa-arrow-left" onclick="gl.switchDay(-1);"></i></td>
+			<td>Editing day: <span class="schedule-day">Monday</span></td>
+			<td><i id="nav-icon" class="fa fa-arrow-right" onclick="gl.switchDay(1);"></i></td>
+		</tr>
+		<tr class="schedule-headers schedule-hidden">
+			<td>Hour</td>
+			<td>Minute selector</td>
+			<td>Switch at</td>
+		</tr>
+		<tr class="schedule-none">
+			<td></td>
+			<td>Press 'Add toggle' to switches</td>
+			<td></td>
+		</tr>
+	</table>
+	<center style="margin-left: 15px;">
+		<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Reset</a>
+		<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>Add toggle</a>
+	</center>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	// Get the object
+	var schedule = app.modules["schedule"];
+	
+	// Start an async request
+	gl.requestData('weekProgram', function(data) {
+		schedule.loadSwitches(data);
+	}, true);
+});
+</script>

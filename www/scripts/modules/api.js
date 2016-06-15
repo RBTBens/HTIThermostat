@@ -16,13 +16,13 @@ obj.load = function() {}
 */
 
 // Synchronously fetch data from the server
-obj.requestData = function(address, func) {
+obj.requestData = function(address, func, as) {
     var result;
     $.ajax({
         type: "get",
         url: this.url + address,
         dataType: "xml",
-        async: false,
+        async: !!as,
         success: function(data) {
             result = func(data);
         }

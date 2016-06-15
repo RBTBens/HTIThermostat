@@ -35,6 +35,7 @@ var app = {
 // Module binds
 app.binds["api"] = "__lib";
 app.binds["sidebar"] = "__lib";
+app.binds["schedule"] = "__lib";
 app.binds["sidebar-left"] = ".sidebar-left .sidebar-scroll";
 app.binds["sidebar-right"] = ".sidebar-right .sidebar-scroll";
 app.binds["time-indicator"] = ".large-strip.time-indicator";
