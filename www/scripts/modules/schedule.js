@@ -67,10 +67,31 @@ obj.addSwitch = function(time) {
 		}
 	});
 	
+	$(".schedule-icon").unbind();
+	$(".schedule-icon").click(function() {
+		if ($(this).hasClass("fa-times")) {
+			self.removeSwitch($(this).parent().parent().attr("data-id"), true);
+		}
+	});
+	
 	$(".schedule-none").addClass("schedule-hidden");
 	$(".schedule-headers").removeClass("schedule-hidden");
 	
+	this.reassignIcons();
 	this.switchId++;
+}
+
+obj.removeSwitch = function(id, save) {
+	$(".schedule-row[data-id=" + id + "]").remove();
+	$(".schedule-row").each(function(i) {
+		$(this).attr("data-id", i);
+	});
+	
+	this.switchId--;
+	this.reassignIcons();
+	
+	if (save)
+		this.saveSwitches();
 }
 
 obj.loadSwitches = function(data) {
@@ -114,12 +135,7 @@ obj.saveSwitches = function(force) {
 	// Replace existing day with our new day setting
 	$("day[name=" + LIST_DAYS[this.day] + "]", self.xml).eq(0).replaceWith(day);
 	var xml = gl.parseXml(self.xml);
-	
-	console.log(xml);
-	
 	gl.setWeekProgram(xml);
-	
-	console.log("Saved!");
 }
 
 obj.resetSwitches = function() {
@@ -149,14 +165,7 @@ obj.validatePositions = function() {
 	var lastVal;
 	for (i = 0; i < this.switchId; i++) {
 		if (data[i].time == lastVal) {
-			$(".schedule-row[data-id=" + i + "]").remove();
-			$(".schedule-row").each(function(i) {
-				$(this).attr("data-id", i);
-			});
-			
-			this.switchId--;
-			this.reassignIcons();
-			
+			this.removeSwitch(i);
 			navigator.notification.alert("Colliding switch! Removed one of the two duplicates.");
 			
 			return;
@@ -218,6 +227,20 @@ obj.resetDay = function() {
 	this.saveSwitches(true);
 }
 
+obj.toggleEdit = function() {
+	if (!this.editing)
+	{
+		$(".schedule-icon").attr("class", "fa fa-times schedule-icon");
+		this.editing = true;
+	}
+	else
+	{
+		this.reassignIcons();
+		this.editing = false;
+	}
+}
+
+// Construction functions
 obj.getTimestamp = function(item, format) {
 	var $hour = item.find(".schedule-hour");
 	var $min = item.find(".schedule-slider");
