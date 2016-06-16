@@ -1,19 +1,19 @@
 @charset "utf-8";
 
-.content {height:100%;}
+.content {height:89.5%;margin:0px;padding:0px;}
 
-#screen {width:100%;height:100%;}
+#scheduler-top{height:10%;}
 
-#scheduler{position: absolute; top: 0px; left: 0px; width:100%;height:100%;}
+#scheduler{width:100%;height:90%;}
 
 #scheduler ul.day-list {width:inherit;height:100%;list-style-type:none;padding:0px;margin:0px;}
 
-#scheduler ul.day-list li {width:inherit;height:14%;margin:0px;display:block;overflow:hidden;border-bottom:solid 1px #666;}
+#scheduler ul.day-list li {width:inherit;height:14.29%;margin:0px;display:block;overflow:hidden;border-bottom:solid 1px #666;}
 #scheduler ul.day-list li:first {border-top:solid 1px #666;}
 
 #scheduler .day-container {float:left;display:block;width:8%;height:100%;}
 #scheduler .day-container .day {display:block;}
-#scheduler .day-container .day h1 {font-size:14px;text-align:right;margin-top:6px;margin-right:6px;}
+#scheduler .day-container .day h1 {font-size:14px;text-align:left;margin-top:6px;margin-left:3px;}
 
 #scheduler .switch-container {width:auto;height:100%;display:block;background-color:#DDD;overflow:hidden;}
 #scheduler .switch-container h1 {font-size:16px;text-align:right;}

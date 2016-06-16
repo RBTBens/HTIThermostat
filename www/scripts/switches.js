@@ -33,7 +33,7 @@ function ptot(pos) {
 	var t = (pos/INNER_WIDTH)*24;
 	var h = Math.floor(t);
 	if (h < 10) h = "0" + h;
-	var m = Math.round((t - h) * 60);
+	var m = Math.round((t - h)*60);
 	if (m < 10) m = "0" + m;
 	return (h + ":" + m);
 }
@@ -43,7 +43,7 @@ function ttop(time) {
 	var p = time.indexOf(':');
 	var h = parseInt(time.substring(0, p));
 	var m = parseInt(time.substring(p+1, time.length));
-	return (h/24 + m /1440) * INNER_WIDTH;
+	return ((h+m/60)/24) * INNER_WIDTH;
 }
 
 // Create switches from program
@@ -79,7 +79,8 @@ function saveSwitches() {
 		
 		$(".switch", this).each(function(i) {
 			var sw = $("<switch>").attr("type", (i % 2 == 0)?("day"):("night")).attr("state", "on");
-			sw.text(ptot(parseInt($(this).css("left"))));
+			
+			sw.text(ptot(parseFloat($(this).css("left"))+SWITCH_WIDTH/2));
 			d.append(sw);
 		});
 		
@@ -118,26 +119,6 @@ function createSwitch(pos) {
 	}, 100);
 
 	return sw;
-}
-
-// Create an option menu around a switch
-function createSwitchMenu(sw) {
-	var m = $(document.createElement("div")).attr("class","options");
-	
-	var rb = $(document.createElement("div")).attr("class","remove-button").on("tap", function(e) {
-		sw.remove();
-		update();
-		EDITING = false;
-	});
-	
-	var RB_HEIGHT = 20;
-	var RB_WIDTH = 20;
-	
-	rb.css("top",sw.height() - RB_HEIGHT).css("left",(SWITCH_WIDTH - RB_WIDTH) / 2);
-	
-	m.append(rb);
-	
-	return m;
 }
 
 // When the document is ready
