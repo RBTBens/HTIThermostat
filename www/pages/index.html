@@ -17,6 +17,25 @@
 				</td>
 			</tr>
 		</table>
+		<table id="control-table">
+			<tr id="temp-change">
+				<td>
+					<input id="inputdegree" type="text" value="15°C">
+				</td>
+				<td>
+					<i class="fa fa-moon-o"></i>
+				</td>
+				<td>
+					<i id="temp-icon" class="fa fa-pencil temp-control" onclick="editTempDayNight(this);"></i>
+				</td>
+				<td>
+					<i class="fa fa-sun-o"></i>
+				</td>
+				<td>
+					21°C
+				</td>
+			</tr>
+		</table>
 		
 		<div class="onoffswitch goprogram">
 			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="goprogram" onclick="window.location.hash='#schedule'; return false;">
@@ -38,6 +57,8 @@
 				<span class="onoffswitch-inner"></span>
 			</label>
 		</div>
+		
+
 	</div>
 </div>
 
@@ -82,7 +103,23 @@
 		gl.setTargetTemperature(slider.getValue());
 		updateSliderColor((slider.getValue() - slider.options.min) / (slider.options.max - slider.options.min));
 	}
-
+	
+	// Change day and night temperature (same for the whole week)
+	function editTempDayNight(edit) {
+		if (!this.editing)
+		{
+			$("#temp-icon").removeClass("fa-pencil").addClass("fa-floppy-o");
+			
+			this.editing = true;
+		}
+		else
+		{
+			$("#temp-icon").removeClass("fa-floppy-o").addClass("fa-pencil");
+			this.editing = false;
+		}
+			
+	}
+	
 	// Change vacation mode
 	function changeMode(checkbox) {
 		if (checkbox.checked)

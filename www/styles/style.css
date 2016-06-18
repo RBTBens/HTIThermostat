@@ -512,6 +512,18 @@
 	font-size: 22px;
 }
 
+#temp-change{
+	font-size: 22px;
+}
+
+#temp-icon{
+	font-size: 22px;
+}
+#inputdegree{
+	background: #ececec;
+	width: 50px
+}
+
 .onoffswitch {
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 	margin: 0 auto; margin-top: 5px;
