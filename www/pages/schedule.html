@@ -8,36 +8,81 @@
 			<col span="1" style="width: 20%;">
 		</colgroup>
 		<tr>
-			<td><i id="nav-icon" class="fa fa-arrow-left" onclick="gl.switchDay(-1);"></i></td>
-			<td>Editing day: <span class="schedule-day">Monday</span></td>
-			<td><i id="nav-icon" class="fa fa-arrow-right" onclick="gl.switchDay(1);"></i></td>
+			<td><i id="nav-icon" class="fa fa-arrow-left" onclick="gl.switchDay(-1, mode);"></i></td>
+			<td><span class="schedule-day">Monday</span><br /><a href="javascript:toggleMode()" class="button button-red">Toggle</a></td>
+			<td><i id="nav-icon" class="fa fa-arrow-right" onclick="gl.switchDay(1, mode);"></i></td>
 		</tr>
-		<tr class="schedule-headers schedule-hidden">
+        <tr class="schedule-overview">
+        	<td colspan="3"></td>
+        </tr>
+		<tr class="schedule-headers hidden-imp">
 			<td>Hour</td>
 			<td>Minute selector</td>
 			<td>Switch at</td>
 		</tr>
-		<tr class="schedule-none">
+		<tr class="schedule-none schedule-hidden hidden-imp">
 			<td></td>
 			<td>Press 'Add toggle' to switches</td>
 			<td></td>
 		</tr>
+        <tr class="schedule-buttons hidden-imp">
+        	<td colspan="3">
+				<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Clear</a>
+				<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Add switch</a>
+				<a href="javascript:gl.toggleEdit();" class="button button-red schedule-add">Edit</a>
+            </td>
+        </tr>
 	</table>
-	<center style="margin-left: 15px;">
-		<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Clear</a>
-		<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>Add toggle</a>
-		<a href="javascript:gl.toggleEdit();" class="button button-red schedule-add">Edit</a>
-	</center>
 </div>
 
 <script type="text/javascript">
+var schedule, mode;
+
 $(document).ready(function() {
-	// Get the object
-	var schedule = app.modules["schedule"];
 	
-	// Start an async request
+	// Create and append schedule list
+	var list = $(document.createElement("ul"));
+	
+	for (var h = 0; h < 24; h++) {
+		var it = $(document.createElement("li")).text(pad(h)+":00");
+		list.append(it);
+	}
+	
+	$(".schedule-overview td").append(list);
+	
+	// Set start mode (0 = overview, 1 = edit)
+	mode = 0;
+	
+	// Get the object
+	schedule = app.modules["schedule"];
+	
+	// Async request
 	gl.requestData('weekProgram', function(data) {
 		schedule.loadSwitches(data);
+		if (mode == 0) $(".schedule-row").addClass("hidden-imp");
 	}, true);
+	
+	
 });
+
+// Handle overview/edit switching
+// 0 = overview, 1 = edit
+function toggleMode() {
+	if (mode == 1) {
+		mode = 0;
+		$(".schedule-overview").removeClass("hidden-imp");
+		$(".schedule-headers").addClass("hidden-imp");
+		$(".schedule-buttons").addClass("hidden-imp");
+		$(".schedule-none").addClass("hidden-imp");
+		$(".schedule-row").addClass("hidden-imp");
+	}
+	else {
+		mode = 1;
+		$(".schedule-overview").addClass("hidden-imp");
+		$(".schedule-headers").removeClass("hidden-imp");
+		$(".schedule-buttons").removeClass("hidden-imp");
+		$(".schedule-none").removeClass("hidden-imp");
+		$(".schedule-row").removeClass("hidden-imp");
+	}
+}
 </script>
