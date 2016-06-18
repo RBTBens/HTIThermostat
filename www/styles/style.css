@@ -519,10 +519,29 @@
 #temp-icon{
 	font-size: 22px;
 }
-#inputdegree{
+
+#temp-table tr td {
 	background: #ececec;
-	width: 50px
+	border:0;
+	width: 30px;
 }
+
+#inputdegree{
+	width: 40px;
+	float: right;
+}
+#inputdegree2{
+	width: 40px;
+	float: left;
+}
+.daynight-control{
+	background: #ececec;
+}
+
+.daynight-control.input {
+	background: white;
+}
+
 
 .onoffswitch {
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;

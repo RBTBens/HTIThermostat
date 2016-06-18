@@ -17,10 +17,10 @@
 				</td>
 			</tr>
 		</table>
-		<table id="control-table">
+		<table id="temp-table">
 			<tr id="temp-change">
 				<td>
-					<input id="inputdegree" type="text" value="15°C">
+					<input id="inputdegree" class="daynight-control" type="number" value="15" readonly>
 				</td>
 				<td>
 					<i class="fa fa-moon-o"></i>
@@ -32,7 +32,7 @@
 					<i class="fa fa-sun-o"></i>
 				</td>
 				<td>
-					21°C
+					<input id="inputdegree2" class="daynight-control" type="number" value="15" readonly>
 				</td>
 			</tr>
 		</table>
@@ -109,12 +109,18 @@
 		if (!this.editing)
 		{
 			$("#temp-icon").removeClass("fa-pencil").addClass("fa-floppy-o");
-			
+			$("#inputdegree").removeAttr("readonly");
+			$("#inputdegree2").removeAttr("readonly");
+			$(".daynight-control").addClass("input");
 			this.editing = true;
 		}
 		else
 		{
 			$("#temp-icon").removeClass("fa-floppy-o").addClass("fa-pencil");
+			document.getElementById('inputdegree').readOnly = true;
+			document.getElementById('inputdegree2').readOnly = true;
+			$(".daynight-control").removeClass("input");
+			slider.setValue(20);
 			this.editing = false;
 		}
 			
