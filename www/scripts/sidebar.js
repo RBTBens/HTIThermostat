@@ -44,6 +44,13 @@ sidebar.loadLeftSide = function() {
 	this.addMenu();
 		this.addMenuItem("Homepage", "#index", "home");
 		this.addMenuItem("Schedule", "#schedule", "calendar");
+	this.endMenu();
+	
+	this.addDivider("Control");
+	
+	this.addMenu();
+		this.addMenuItem("Create Thermostat", "javascript:gl.createThermostat();", "plus-circle");
+		this.addMenuItem("Delete Thermostat", "javascript:gl.deleteThermostat();", "minus-circle");
 		this.addMenuItem("Close", "#this", "times", true);
 	this.endMenu();
 
@@ -54,12 +61,7 @@ sidebar.loadLeftSide = function() {
 sidebar.loadRightSide = function() {
 	this.beginTemplate();
 	
-	this.addDivider("DEBUGGING");
-	this.addMenu();
-		this.addMenuItem("Create Thermostat", "#this-createThermostat", "plus-circle");
-		this.addMenuItem("Delete Thermostat", "#this-deleteThermostat", "minus-circle");
-		this.addMenuItem("Request Thermostat", "#this-requestThermostat", "info-circle");
-	this.endMenu();
+	this.addDivider("Documentation");
 
 	return this.endTemplate();
 }

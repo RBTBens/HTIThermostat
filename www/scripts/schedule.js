@@ -118,7 +118,6 @@ schedule.loadSwitches = function(day) {
 // Saves the switches to the server
 schedule.saveSwitches = function(force) {
 	// Create the container
-	var self = app.modules[this.id];
 	var day = $("<day>").attr("name", LIST_DAYS[this.day]);
 	
 	// Check count
@@ -127,7 +126,7 @@ schedule.saveSwitches = function(force) {
 	
 	// Iterate over our data rows
 	$(".schedule-row").each(function(i) {
-		day.append($("<switch>").attr("type", i % 2 == 0 ? "day" : "night").attr("state", "on").text(self.getTimestamp($(this), true)));
+		day.append($("<switch>").attr("type", i % 2 == 0 ? "day" : "night").attr("state", "on").text(schedule.getTimestamp($(this), true)));
 	});
 	
 	// Calculate current items
@@ -140,7 +139,7 @@ schedule.saveSwitches = function(force) {
 	
 	// Replace existing day with our new day setting
 	$("day[name=" + LIST_DAYS[this.day] + "]", this.getProgram()).eq(0).replaceWith(day);
-	var xml = gl.parseXml(this.getProgram());
+	var xml = gl.parseXml(this.getProgram()[0]);
 	gl.setWeekProgram(xml);
 	
 	this.updateOverview();
@@ -175,6 +174,9 @@ schedule.validatePositions = function() {
 	
 	var lastVal;
 	for (i = 0; i < this.switchId; i++) {
+		if (!data[i])
+			return;
+		
 		if (data[i].time == lastVal) {
 			this.removeSwitch(i);
 			navigator.notification.alert("Colliding switch! Removed one of the two duplicates.");
@@ -219,7 +221,7 @@ schedule.validatePositions = function() {
 }
 
 // Changes the day displayed
-schedule.switchDay = function(dir, mode) {
+schedule.switchDay = function(dir) {
 	this.saveSwitches();
 	this.day += dir;
 	
@@ -233,7 +235,8 @@ schedule.switchDay = function(dir, mode) {
 	this.resetSwitches();
 	this.loadSwitches(-1);
 	
-	if (mode == 0) $(".schedule-row").addClass("hidden-imp");
+	if (schedule.mode == 0)
+		$(".schedule-row").addClass("hidden-imp");
 }
 
 // Resets a full day
@@ -244,17 +247,21 @@ schedule.resetDay = function() {
 
 // Copies a day
 schedule.copyDay = function() {
+	if (this.copy == -1)
+		$(".schedule-buttons a:last").removeClass("button-grey").addClass("button-red");
+	
 	this.copy = this.day;
 }
 
 // Pastes a day
 schedule.pasteDay = function() {
-	if (this.copy == -1) {
-	}
-	else {
-		alert(this.copy);
+	if (this.copy != -1) {
 		this.resetSwitches();
 		this.loadSwitches(this.copy);
+		this.saveSwitches(true);
+		
+		this.copy = -1;
+		$(".schedule-buttons a:last").removeClass("button-red").addClass("button-grey");
 	}
 }
 
@@ -262,6 +269,7 @@ schedule.pasteDay = function() {
 schedule.toggleEdit = function() {
 	if (!this.editing)
 	{
+		navigator.notification.alert("You can now remove switches by pressing the 'x' on the right of an item.");
 		$(".schedule-icon").attr("class", "fa fa-times schedule-icon");
 		this.editing = true;
 	}

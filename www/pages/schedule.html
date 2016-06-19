@@ -8,14 +8,14 @@
 			<col span="1" style="width: 20%;">
 		</colgroup>
 		<tr>
-			<td><i id="nav-icon" class="fa fa-arrow-left" onclick="gl.switchDay(-1, mode);"></i></td>
+			<td><i id="nav-icon" class="fa fa-arrow-left" onclick="schedule.switchDay(-1);"></i></td>
 			<td>
             	<div class="schedule-day">
                 	<span>Monday</span>
                     <i id="temp-icon" class="fa fa-pencil temp-control" onclick="toggleMode()"></i>
                 </div>
             </td>
-			<td><i id="nav-icon" class="fa fa-arrow-right" onclick="gl.switchDay(1, mode);"></i></td>
+			<td><i id="nav-icon" class="fa fa-arrow-right" onclick="schedule.switchDay(1);"></i></td>
 		</tr>
         <tr class="schedule-overview">
         	<td colspan="3"></td>
@@ -33,13 +33,13 @@
 	</table>
     <div class="schedule-buttons hidden-imp">
     	<center style="margin-left:15px">
-			<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Clear</a>
-			<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>Add switch</a>
-			<a href="javascript:gl.toggleEdit();" class="button button-red schedule-add">Edit</a>
+			<a href="javascript:schedule.resetDay();" class="button button-red schedule-add">Clear</a>
+			<a href="javascript:schedule.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>Add switch</a>
+			<a href="javascript:schedule.toggleEdit();" class="button button-red schedule-add">Edit</a>
 	    </center>
         <center>
-        	<a href="javascript:gl.copyDay();" class="button button-red schedule-add">Copy this day</a>
-            <a href="javascript:gl.pasteDay();" class="button button-grey schedule-add">Paste</a>
+        	<a href="javascript:schedule.copyDay();" class="button button-red schedule-add">Copy this day</a>
+            <a href="javascript:schedule.pasteDay();" class="button button-grey schedule-add">Paste</a>
         </center>
     </div>
 </div>

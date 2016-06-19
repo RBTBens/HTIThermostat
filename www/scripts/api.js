@@ -27,7 +27,9 @@ gl.load = function() {
 			gl.parseData(data);
 		},
 		error: function(jq, txt, err) {
-			console.error("Fetch error: " + err);
+			app.loader.close();
+			
+			alert("The thermostat is currently not active. Create your thermostat by using the top left menu and pressing 'Create Thermostat'.");
 		}
 	});
 	
@@ -82,6 +84,16 @@ gl.parseData = function(data) {
 	
 	// Load hooks
 	gl.runHooks();
+	
+	// Check if we have a custom starting page
+	if (app.firstPage)
+		app.loadPage(app.firstPage);
+	
+	// Check the time
+	var time = $main.find("time");
+	var arr = time.text().split(":");
+	var hour = parseInt(arr[0]);
+	app.changeDayTime(hour >= 6);
 }
 
 // Run the hooks
@@ -126,14 +138,24 @@ gl.loadHomepage = function() {
 	// Get the slider object
 	slider = $("#slider-shape").data("roundSlider");
 	
+	// Initialize the timer
+	date_time("date_time");
+	
 	// Hook the slider load
 	gl.hooks.index = function() {
+		// Load homepage beforehand
+		gl.loadHomepage();
+		
 		var value = gl.getTargetTemperature();
 		slider.setValue(value);
 		
 		// And update the color
 		var options = slider.options;
 		updateSliderColor((value - options.min) / (options.max - options.min));
+		
+		// Now get the temperatures
+		$("#inputdegree").val(gl.getTargetTemperature("night"));
+		$("#inputdegree2").val(gl.getTargetTemperature("day"));
 	}
 }
 
@@ -160,8 +182,10 @@ function editTempDayNight(edit) {
 		document.getElementById('inputdegree').readOnly = true;
 		document.getElementById('inputdegree2').readOnly = true;
 		$(".daynight-control").removeClass("input");
-		slider.setValue(20);
 		this.editing = false;
+		
+		gl.setTargetTemperature($("#inputdegree").val(), "night");
+		gl.setTargetTemperature($("#inputdegree2").val(), "day");
 	}
 		
 }
@@ -172,7 +196,13 @@ function changeMode(checkbox) {
 	{
 		slider.disable();
 		slider.setValue(slider.options.min);
+		$("#inputdegree").val(slider.getValue());
+		$("#inputdegree2").val(slider.getValue());
+		
 		gl.setTargetTemperature(slider.getValue());
+		gl.setTargetTemperature(slider.getValue(), "night");
+		gl.setTargetTemperature(slider.getValue(), "day");
+		
 		$(".temp-control").addClass("grayed");
 	}
 	else
@@ -180,11 +210,6 @@ function changeMode(checkbox) {
 		slider.enable();
 		$(".temp-control").removeClass("grayed");
 	}
-}	
-
-// Change layout
-function changeDayNight(checkbox) {
-	app.changeDayTime(!checkbox.checked);
 }
 
 // Update the color
@@ -201,38 +226,6 @@ function updateSliderColor(p) {
  *
 */
 
-// Requests thermostat
-gl.requestThermostat = function() {
-	$.ajax({
-		type: "GET",
-		url: this.url,
-		dataType: "xml",
-		success: function(xml) {
-			$(xml).find("thermostat").children().each(function() {
-				var key = this.tagName;
-				var value = $(this).text();
-				
-				if (key == "week_program")
-				{
-					$(this).find("day").each(function() {
-						var day = $(this).attr("name");
-						$(this).children().each(function() {
-							console.log($(this).attr("type") + " - " + $(this).attr("state") + " -> " + $(this).text());
-						});
-					});
-				}
-				else
-					console.log("[" + key + "] -> " + value);
-			});
-			
-			navigator.notification.alert("Check your console for the data!");
-		},
-		error: function(jq, txt, err) {
-			navigator.notification.alert("Error: " + err);
-		}
-	});
-}
-
 // Create thermostat
 gl.createThermostat = function() {
 	$.ajax({
@@ -241,7 +234,10 @@ gl.createThermostat = function() {
 		success: function(xml) {
 			var parse = $(xml).eq(0).text();
 			if (parse == "Created")
+			{
 				navigator.notification.alert("Thermostat created!");
+				window.location.reload();
+			}
 			else
 				navigator.notification.alert("Failed to create thermostat; it might already exist");
 		}
@@ -256,25 +252,32 @@ gl.deleteThermostat = function() {
 		success: function(xml) {
 			var parse = $(xml).eq(0).text();
 			if (parse == "OK")
+			{
 				navigator.notification.alert("Thermostat deleted!");
+				window.location.reload();
+			}
 			else
 				navigator.notification.alert("Failed to delete thermostat; it might already be gone");
 		}
 	});
 }
 
-gl.getTargetTemperature = function() {
+// Gets the target temperature
+gl.getTargetTemperature = function(item) {
 	var t = gl.thermostat;
-	return parseFloat(t.find("target_temperature").text());
+	item = item || "target";
+	return parseFloat(t.find(item + "_temperature").text());
 }
 
-gl.setTargetTemperature = function(value) {
+// Sets the target temperature
+gl.setTargetTemperature = function(value, item) {
 	var t = gl.thermostat;
-	t.find("target_temperature").text(value);
+	item = item || "target";
+	t.find(item + "_temperature").text(value);
 	
-	var obj = $("<target_temperature>").text(value);
+	var obj = $("<" + item + "_temperature>").text(value);
 	var xml = this.parseXml(obj[0]);
-	this.uploadData('targetTemperature', xml);
+	this.uploadData(item + "Temperature", xml);
 }
 
 /*

@@ -1,0 +1,54 @@
+<div class="content">
+	<div class="container">
+		<table id="control-table">
+			<tr>
+				<td>
+					<i id="control-icon" class="fa fa-minus temp-control" onclick="changeValue(-1);"></i><br /><br />
+					<i class="fa fa-minus temp-control" onclick="changeValue(-0.1);"></i>
+				</td>
+				<td>
+					<div id="slider-shape"></div><br />
+					Status: <i id="control-time-indicator" class="fa fa-sun-o"></i><br />
+					<div id="date_time"></div>
+				</td>
+				<td>
+					<i id="control-icon" class="fa fa-plus temp-control" onclick="changeValue(1);"></i><br /><br />
+					<i class="fa fa-plus temp-control" onclick="changeValue(0.1);"></i>
+				</td>
+			</tr>
+		</table>
+		<table id="temp-table">
+			<tr id="temp-change">
+				<td>
+					<input id="inputdegree" class="daynight-control" type="number" value="21" readonly>
+				</td>
+				<td>
+					<i class="fa fa-moon-o"></i>
+				</td>
+				<td>
+					<i id="temp-icon" class="fa fa-pencil temp-control" onclick="editTempDayNight(this);"></i>
+				</td>
+				<td>
+					<i class="fa fa-sun-o"></i>
+				</td>
+				<td>
+					<input id="inputdegree2" class="daynight-control" type="number" value="21" readonly>
+				</td>
+			</tr>
+		</table>
+		
+		<div class="onoffswitch goprogram">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="goprogram" onclick="window.location.hash='#schedule'; return false;">
+			<label class="onoffswitch-label" for="goprogram">
+				<span class="onoffswitch-inner"></span>
+			</label>
+		</div>
+		
+		<div class="onoffswitch vacation" style="margin-top: 8px;">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="vacation" onclick="changeMode(this);">
+			<label class="onoffswitch-label" for="vacation">
+				<span class="onoffswitch-inner"></span>
+			</label>
+		</div>
+	</div>
+</div>

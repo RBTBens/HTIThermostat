@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="dev.hti.group20.thermostat" version="1.2.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="dev.hti.group20.thermostat" version="1.3.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Thermostat</name>
     <description>Thermostat to control your temperatures</description>
     <author email="r.b.t.bens@student.tue.nl" href="https://canvas.win.tue.nl/groups/128">HTI Group 20</author>

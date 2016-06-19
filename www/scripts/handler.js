@@ -11,6 +11,20 @@ var app = {
 		
 		// Load the sidebars
 		sidebar.load();
+		
+		// Check which page we start on
+		var hash = window.location.hash;
+		
+		// Replace the #
+		hash = hash.replace("#", "");
+		
+		// Check if it's something
+		if (hash == "")
+			hash = "index";
+		
+		// Check if default
+		if (hash != "index")
+			this.firstPage = hash;
     }
 };
 
