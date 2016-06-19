@@ -23,7 +23,7 @@ obj.appendSwitch = function() {
 		return;
 	
 	var hour = id;
-	var $prev = $("#schedule-control tbody tr.schedule:last-of-type td:first-child select");
+	var $prev = $("#schedule-control tbody tr:last-child td:first-child select");
 	if ($prev.length > 0)
 		hour = parseInt($prev.val()) + 1;
 	
@@ -43,7 +43,7 @@ obj.addSwitch = function(time) {
 	item.append($("<td>").html('<select class="schedule-hour">' + this.getHours(hour) + '</select>'));
 	item.append($("<td>").html('<input type="range" class="schedule-slider" min="0" max="' + MAX_MINUTES + '" value="' + mins + '">'));
 	item.append($("<td>").html('<span class="slider-display">' + pad(hour) + ':' + pad(mins) + '</span> <i class="fa fa-' + (id % 2 == 0 ? 'sun' : 'moon') + '-o schedule-icon"></i>'));
-	$("#schedule-control .schedule-buttons").before(item);
+	$("#schedule-control").append(item);
 	
 	$(".schedule-hour").unbind();
 	$(".schedule-hour").on("change", function() {
@@ -53,6 +53,7 @@ obj.addSwitch = function(time) {
 		
 		self.validatePositions();
 		self.saveSwitches();
+		self.updateOverview();
 	});
 	
 	$(".schedule-slider").unbind();
@@ -77,7 +78,7 @@ obj.addSwitch = function(time) {
 	$(".schedule-none").addClass("schedule-hidden");
 	$(".schedule-headers").removeClass("schedule-hidden");
 	
-	updateOverview();
+	this.updateOverview();
 	this.reassignIcons();
 	this.switchId++;
 }
@@ -197,7 +198,7 @@ obj.validatePositions = function() {
 		}
 		
 		for (i = 0; i < this.switchId; i++) {
-			$("#schedule-control .schedule-buttons").before(data[i].obj);
+			$("#schedule-control").append(data[i].obj);
 		}
 		
 		$(".schedule-row").each(function(i) {
@@ -223,13 +224,13 @@ obj.switchDay = function(dir, mode) {
 	this.loadSwitches();
 	
 	if (mode == 0) $(".schedule-row").addClass("hidden-imp");
-	updateOverview();
+	this.updateOverview();
 }
 
 obj.resetDay = function() {
 	this.resetSwitches();
 	this.saveSwitches(true);
-	updateOverview();
+	this.updateOverview();
 }
 
 obj.toggleEdit = function() {
@@ -245,7 +246,7 @@ obj.toggleEdit = function() {
 	}
 }
 
-updateOverview = function() {
+obj.updateOverview = function() {
 	var sws = $(".schedule-row");
 	var ov = $(".schedule-overview td ul li");
 	

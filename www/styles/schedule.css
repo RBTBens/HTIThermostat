@@ -46,16 +46,3 @@ input[type=range] {
 .schedule-overview li.on {
 	background-color:#099;
 }
-
-.schedule-buttons {
-	vertical-align:bottom;
-}
-
-.schedule-buttons td {
-	padding:0px;
-}
-
-.schedule-buttons td a {
-	margin:5px 0px;
-	padding:5px 30px;
-}

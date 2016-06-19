@@ -25,14 +25,12 @@
 			<td>Press 'Add toggle' to switches</td>
 			<td></td>
 		</tr>
-        <tr class="schedule-buttons hidden-imp">
-        	<td colspan="3">
-				<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Clear</a>
-				<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Add switch</a>
-				<a href="javascript:gl.toggleEdit();" class="button button-red schedule-add">Edit</a>
-            </td>
-        </tr>
 	</table>
+    <center class="schedule-buttons hidden-imp" style="margin-left:15px">
+		<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Clear</a>
+		<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>Add switch</a>
+		<a href="javascript:gl.toggleEdit();" class="button button-red schedule-add">Edit</a>
+    </center>
 </div>
 
 <script type="text/javascript">
@@ -75,6 +73,7 @@ function toggleMode() {
 		$(".schedule-buttons").addClass("hidden-imp");
 		$(".schedule-none").addClass("hidden-imp");
 		$(".schedule-row").addClass("hidden-imp");
+		$(".schedule-buttons").addClass("hidden-imp");
 	}
 	else {
 		mode = 1;
@@ -83,6 +82,7 @@ function toggleMode() {
 		$(".schedule-buttons").removeClass("hidden-imp");
 		$(".schedule-none").removeClass("hidden-imp");
 		$(".schedule-row").removeClass("hidden-imp");
+		$(".schedule-buttons").removeClass("hidden-imp");
 	}
 }
 </script>
