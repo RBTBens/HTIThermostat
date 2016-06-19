@@ -11,6 +11,7 @@ var LIST_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturd
 // Variables
 obj.xml = "";
 obj.day = 0;
+obj.copy = -1;
 obj.switchId = 0;
 
 // Called when all scripts are ready
@@ -95,13 +96,16 @@ obj.removeSwitch = function(id, save) {
 		this.saveSwitches();
 }
 
-obj.loadSwitches = function(data) {
+obj.loadSwitches = function(day, data) {
 	var cur = this;
 	var self = app.modules[this.id];
 	if (data)
 		self.xml = data;
 	
-	$("switch", $("day", self.xml).eq(this.day)).each(function(i) {
+	var d = this.day;
+	if (day && day != -1) d = day;
+	
+	$("switch", $("day", self.xml).eq(d)).each(function(i) {
 		if ($(this).attr("state") == "on") {
 			cur.addSwitch($(this).text());
 		}
@@ -231,6 +235,20 @@ obj.switchDay = function(dir, mode) {
 obj.resetDay = function() {
 	this.resetSwitches();
 	this.saveSwitches(true);
+}
+
+obj.copyDay = function() {
+	this.copy = this.day;
+}
+
+obj.pasteDay = function() {
+	if (this.copy == -1) {
+	}
+	else {
+		alert(this.copy);
+		this.resetSwitches();
+		this.loadSwitches(this.copy);
+	}
 }
 
 obj.toggleEdit = function() {
