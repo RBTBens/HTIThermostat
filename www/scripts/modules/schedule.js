@@ -220,7 +220,7 @@ obj.switchDay = function(dir, mode) {
 	else if (this.day >= LIST_DAYS.length)
 		this.day = 0;
 	
-	$(".schedule-day").html(LIST_DAYS[this.day]);
+	$(".schedule-day span").html(LIST_DAYS[this.day]);
 	
 	this.resetSwitches();
 	this.loadSwitches();
