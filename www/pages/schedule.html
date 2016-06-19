@@ -31,11 +31,17 @@
 			<td></td>
 		</tr>
 	</table>
-    <center class="schedule-buttons hidden-imp" style="margin-left:15px">
-		<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Clear</a>
-		<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>Add switch</a>
-		<a href="javascript:gl.toggleEdit();" class="button button-red schedule-add">Edit</a>
-    </center>
+    <div class="schedule-buttons hidden-imp">
+    	<center style="margin-left:15px">
+			<a href="javascript:gl.resetDay();" class="button button-red schedule-add">Clear</a>
+			<a href="javascript:gl.appendSwitch();" class="button button-icon button-red schedule-add"><i class="fa fa-plus"></i>Add switch</a>
+			<a href="javascript:gl.toggleEdit();" class="button button-red schedule-add">Edit</a>
+	    </center>
+        <center>
+        	<a href="javascript:gl.copyDay();" class="button button-red schedule-add">Copy this day</a>
+            <a href="javascript:gl.pasteDay();" class="button button-grey schedule-add">Paste</a>
+        </center>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -61,7 +67,7 @@ $(document).ready(function() {
 	
 	// Async request
 	gl.requestData('weekProgram', function(data) {
-		schedule.loadSwitches(data);
+		schedule.loadSwitches(-1, data);
 		if (mode == 0) $(".schedule-row").addClass("hidden-imp");
 	}, true);
 });

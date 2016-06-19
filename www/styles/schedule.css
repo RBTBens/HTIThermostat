@@ -47,7 +47,7 @@ input[type=range] {
 }
 
 .schedule-overview li.n {
-	background-color:#BBBBC8;
+	background-color:#999;
 }
 
 .schedule-overview li.d {
@@ -55,11 +55,11 @@ input[type=range] {
 }
 
 .schedule-overview li.nd {
-    background: linear-gradient(#BBBBC8, #EEE);
+    background: linear-gradient(#999, #EEE);
 }
 
 .schedule-overview li.dn {
-    background: linear-gradient(#EEE, #BBBBC8);
+    background: linear-gradient(#EEE, #999);
 }
 
 .schedule-day i {
