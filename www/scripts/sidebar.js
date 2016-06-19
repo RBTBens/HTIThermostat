@@ -17,10 +17,10 @@ sidebar.endTemplate = function() { return this.template; }
 sidebar.addDivider = function(txt) {
 	this.template += '<div class="sidebar-divider">' + txt + '</div>';
 }
-obj.addHeader = function(txt) {
+sidebar.addHeader = function(txt) {
 	this.template += '<h3 class="cs-doc">' + txt + '</h3>';
 }
-obj.addText = function(txt) {
+sidebar.addText = function(txt) {
 	this.template += '<p class="cs-doc">' + txt + '</p>';
 }
 sidebar.addMenu = function() {
