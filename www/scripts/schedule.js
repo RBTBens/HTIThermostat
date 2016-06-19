@@ -241,8 +241,12 @@ schedule.switchDay = function(dir) {
 
 // Resets a full day
 schedule.resetDay = function() {
-	this.resetSwitches();
-	this.saveSwitches(true);
+	var y = confirm("Are you sure? This action can not be undone.");
+	
+	if (y) {
+		this.resetSwitches();
+		this.saveSwitches(true);
+	}
 }
 
 // Copies a day
@@ -259,9 +263,6 @@ schedule.pasteDay = function() {
 		this.resetSwitches();
 		this.loadSwitches(this.copy);
 		this.saveSwitches(true);
-		
-		this.copy = -1;
-		$(".schedule-buttons a:last").removeClass("button-red").addClass("button-grey");
 	}
 }
 

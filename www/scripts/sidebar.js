@@ -17,6 +17,12 @@ sidebar.endTemplate = function() { return this.template; }
 sidebar.addDivider = function(txt) {
 	this.template += '<div class="sidebar-divider">' + txt + '</div>';
 }
+obj.addHeader = function(txt) {
+	this.template += '<h3 class="cs-doc">' + txt + '</h3>';
+}
+obj.addText = function(txt) {
+	this.template += '<p class="cs-doc">' + txt + '</p>';
+}
 sidebar.addMenu = function() {
 	this.template += '<div class="sidebar-menu">';
 }
@@ -61,8 +67,23 @@ sidebar.loadLeftSide = function() {
 sidebar.loadRightSide = function() {
 	this.beginTemplate();
 	
-	this.addDivider("Documentation");
-
+	this.addDivider("Thermostat");
+	this.addHeader("Adjusting temperature settings");
+	this.addText("You can adjust the temperature using either the slider, the plus/minus buttons, or by pressing the temperature indicator in the middle of the slider.");
+	this.addText("You can adjust the day and night temperatures by pressing the edit button between the sun and moon indicators. After editing, press the save button to store the new temperatures.");
+	this.addHeader("Vacation mode");
+	this.addText("Optionally, you can enable vacation mode using the bottom button. This will permanently set the temperature to the lowest possible value until vacation mode is disabled again by pressing the button.");
+	this.addHeader("Switch editing");
+	this.addText("Press the 'View week program' button to open the switch editor. Here you can set up a program for the thermostat to automatically switch between day and night temperature.");
+	
+	this.addDivider("Switch editing");
+	this.addHeader("Overview");
+	this.addText("The overview displays when the thermostat will use the day temperature and night temperature on a given day. Dark-grey indicates night temperature and light-grey indicates day temperature.");
+	this.addText("You can use the arrow-buttons to view a different day. You can use the edit button to switch to editing mode.");
+	this.addHeader("Editing");
+	this.addText("In editing mode, the table shows all switches on the current day. You can change the time of a switch using the hour dropdown menu and the minute slider.");
+	this.addText("Pressing the 'clear' button will remove all switches on this day. Pressing the 'add switch' button will add a new switch. Pressing the edit button will allow individual switch removal.");
+	this.addText("You can copy the switches of an entire day using the 'copy this schedule' button. You can then paste it in any other day using the 'paste' button.");
 	return this.endTemplate();
 }
 

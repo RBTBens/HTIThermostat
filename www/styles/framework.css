@@ -6,6 +6,18 @@ body {
 	padding: 0
 }
 
+h3.cs-doc {
+	color:#CCC;
+	font-size:16px;
+	margin-left:30px;
+}
+
+p.cs-doc {
+	margin-left:30px;
+	line-height:20px;
+	font-size:12px;
+}
+
 *,
 :focus {
 	outline: 0
