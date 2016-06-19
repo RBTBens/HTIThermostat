@@ -1,6 +1,5 @@
 // Add the object to our module array
-var obj = { id: "schedule", lib: true };
-app.modules[obj.id] = obj;
+var schedule = {};
 
 // Constants
 var MAX_SWITCHES = 10;
@@ -9,16 +8,13 @@ var MAX_MINUTES = 59;
 var LIST_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 // Variables
-obj.xml = "";
-obj.day = 0;
-obj.copy = -1;
-obj.switchId = 0;
-
-// Called when all scripts are ready
-obj.load = function() {}
+schedule.xml = "";
+schedule.day = 0;
+schedule.copy = -1;
+schedule.switchId = 0;
 
 // Append switches
-obj.appendSwitch = function() {	
+schedule.appendSwitch = function() {	
 	var id = this.switchId;
 	if (id >= MAX_SWITCHES)
 		return;
@@ -32,7 +28,8 @@ obj.appendSwitch = function() {
 	this.saveSwitches();
 }
 
-obj.addSwitch = function(time) {
+// Adds a switch at a given time
+schedule.addSwitch = function(time) {
 	// Parse time
 	var digits = time.split(":");
 	var hour = parseInt(digits[0]);
@@ -83,7 +80,8 @@ obj.addSwitch = function(time) {
 	this.switchId++;
 }
 
-obj.removeSwitch = function(id, save) {
+// Removes a specific switch
+schedule.removeSwitch = function(id, save) {
 	$(".schedule-row[data-id=" + id + "]").remove();
 	$(".schedule-row").each(function(i) {
 		$(this).attr("data-id", i);
@@ -96,7 +94,8 @@ obj.removeSwitch = function(id, save) {
 		this.saveSwitches();
 }
 
-obj.loadSwitches = function(day, data) {
+// Load all switches
+schedule.loadSwitches = function(day, data) {
 	var cur = this;
 	var self = app.modules[this.id];
 	if (data)
@@ -116,7 +115,8 @@ obj.loadSwitches = function(day, data) {
 	this.updateOverview();
 }
 
-obj.saveSwitches = function(force) {
+// Saves the switches to the server
+schedule.saveSwitches = function(force) {
 	// Create the container
 	var self = app.modules[this.id];
 	var day = $("<day>").attr("name", LIST_DAYS[this.day]);
@@ -146,7 +146,8 @@ obj.saveSwitches = function(force) {
 	this.updateOverview();
 }
 
-obj.resetSwitches = function() {
+// Resets all switches
+schedule.resetSwitches = function() {
 	$(".schedule-row").remove();
 	$(".schedule-none").removeClass("schedule-hidden");
 	$(".schedule-headers").addClass("schedule-hidden");
@@ -154,7 +155,8 @@ obj.resetSwitches = function() {
 	this.switchId = 0;
 }
 
-obj.reassignIcons = function() {
+// Reloads the icons to match with the order
+schedule.reassignIcons = function() {
 	$(".schedule-row").each(function(i) {
 		var $icon = $(this).find(".schedule-icon");
 		$icon.removeClass("fa-sun-o");
@@ -163,7 +165,8 @@ obj.reassignIcons = function() {
 	});
 }
 
-obj.validatePositions = function() {
+// Validates the positions of each row
+schedule.validatePositions = function() {
 	var data = [];
 	var self = this;
 	$(".schedule-row").each(function(i) {
@@ -215,7 +218,8 @@ obj.validatePositions = function() {
 	}
 }
 
-obj.switchDay = function(dir, mode) {
+// Changes the day displayed
+schedule.switchDay = function(dir, mode) {
 	this.saveSwitches();
 	this.day += dir;
 	
@@ -232,16 +236,19 @@ obj.switchDay = function(dir, mode) {
 	if (mode == 0) $(".schedule-row").addClass("hidden-imp");
 }
 
-obj.resetDay = function() {
+// Resets a full day
+schedule.resetDay = function() {
 	this.resetSwitches();
 	this.saveSwitches(true);
 }
 
-obj.copyDay = function() {
+// Copies a day
+schedule.copyDay = function() {
 	this.copy = this.day;
 }
 
-obj.pasteDay = function() {
+// Pastes a day
+schedule.pasteDay = function() {
 	if (this.copy == -1) {
 	}
 	else {
@@ -251,7 +258,8 @@ obj.pasteDay = function() {
 	}
 }
 
-obj.toggleEdit = function() {
+// Toggles editing mode
+schedule.toggleEdit = function() {
 	if (!this.editing)
 	{
 		$(".schedule-icon").attr("class", "fa fa-times schedule-icon");
@@ -264,7 +272,8 @@ obj.toggleEdit = function() {
 	}
 }
 
-obj.updateOverview = function() {
+// Updates the whole overview
+schedule.updateOverview = function() {
 	var sws = $(".schedule-row");
 	var ov = $(".schedule-overview td ul li");
 	
@@ -301,7 +310,7 @@ obj.updateOverview = function() {
 }
 
 // Construction functions
-obj.getTimestamp = function(item, format) {
+schedule.getTimestamp = function(item, format) {
 	var $hour = item.find(".schedule-hour");
 	var $min = item.find(".schedule-slider");
 	
@@ -311,7 +320,8 @@ obj.getTimestamp = function(item, format) {
 		return parseInt($hour.val()) * 60 + parseInt($min.val());
 }
 
-obj.getHours = function(sel) {
+// Gets all hours for in combo boxes
+schedule.getHours = function(sel) {
 	if (sel < 0 || sel >= MAX_HOURS)
 		sel = 0;
 	

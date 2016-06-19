@@ -30,35 +30,6 @@ $(window).load(function() {
 		$(".map-fullscreen iframe").css("width", e), $(".map-fullscreen iframe").css("height", t)
 	}
 	
-	function w() {
-		$("a").each(function() {
-			var href = $(this).attr("href");
-			if (!href)
-			{
-				// Do nothing, ha!
-			}
-			else if (href == "#this")
-			{
-				$(this).removeAttr("href");
-			}
-			else if (href.substring(0, 6) == "#this-")
-			{
-				var func = href.substring(href.indexOf("-") + 1, href.length);
-				var par1 = func.indexOf("(");
-				var par2 = func.indexOf(")");
-				var para = "()";
-				
-				if (par1 > -1 && par2 > -1)
-				{
-					para = func.substring(par1, par2 + 1);
-					func = func.substring(0, par1);
-				}
-				
-				$(this).attr("href", "javascript:gl['" + func + "']" + para);
-			}
-		});
-	}
-	
 	if ($(function() {
 			FastClick.attach(document.body)
 		}), $(function() {
@@ -215,5 +186,5 @@ $(window).load(function() {
 			id: "mynano"
 		},
 		v = new Nanobar(h);
-	v.go(30), v.go(100), w();
+	v.go(30), v.go(100);
 });
