@@ -1,11 +1,12 @@
 // Add the object to our module array
 var gl = {};
 var slider;
+gl.hooks = {};
 
 // Variables
 gl.groupId = 20;
 gl.url = "http://wwwis.win.tue.nl/2id40-ws/" + gl.groupId + "/";
-gl.object = '<thermostat><current_day>Monday</current_day><time>00:15</time><current_temperature>21.0</current_temperature><target_temperature>21.0</target_temperature><day_temperature>21.0</day_temperature><night_temperature>21.0</night_temperature><week_program_state>on</week_program_state><week_program state="on"><day name="Monday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Tuesday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Wednesday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Thursday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Friday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Saturday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Sunday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day></week_program></thermostat>';
+gl.defaultXml = '<thermostat><current_day>Monday</current_day><time>00:00</time><current_temperature>21.0</current_temperature><target_temperature>21.0</target_temperature><day_temperature>21.0</day_temperature><night_temperature>21.0</night_temperature><week_program_state>on</week_program_state><week_program state="on"><day name="Monday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Tuesday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Wednesday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Thursday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Friday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Saturday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day><day name="Sunday"><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="night" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch><switch type="day" state="off">00:00</switch></day></week_program></thermostat>';
 
 /*
  *
@@ -20,6 +21,9 @@ gl.load = function() {
 		url: this.url,
 		dataType: "xml",
 		success: function(data) {
+			if (!data)
+				data = $.parseXML(gl.defaultXml);
+			
 			gl.parseData(data);
 		},
 		error: function(jq, txt, err) {
@@ -69,10 +73,24 @@ gl.parseData = function(data) {
 	// Close the loader
 	app.loader.close();
 	
-	// Temporary
-	console.log(data);
+	// Find thermostat
+	$obj = $(data);
+	$main = $obj.find("thermostat");
 	
-	// Create something like hooks to run whenever data is obtained && on load
+	// Set thermostat
+	gl.thermostat = $main;
+	
+	// Load hooks
+	gl.runHooks();
+}
+
+// Run the hooks
+gl.runHooks = function() {
+	// Trigger hooks
+	for (var hook in gl.hooks) {
+		if (hook == app.currentPage)
+			gl.hooks[hook]();
+	}
 }
 
 /*
@@ -100,20 +118,23 @@ gl.loadHomepage = function() {
 			updateSliderColor((args.value - args.options.min) / (args.options.max - args.options.min));
 		},
 		change: function(args) {
-			//gl.setTargetTemperature(args.value);
-			updateSliderColor((args.value - args.options.min) / (args.options.max - args.options.min));
-		},
-		create: function(args) {
-			//var value = gl.getTargetTemperature();
-			//this.setValue(value);
-			
-			// To-Do: Use value here instead maybe???? actually no not in create, should be on change
+			gl.setTargetTemperature(args.value);
 			updateSliderColor((args.value - args.options.min) / (args.options.max - args.options.min));
 		}
 	});
 	
 	// Get the slider object
 	slider = $("#slider-shape").data("roundSlider");
+	
+	// Hook the slider load
+	gl.hooks.index = function() {
+		var value = gl.getTargetTemperature();
+		slider.setValue(value);
+		
+		// And update the color
+		var options = slider.options;
+		updateSliderColor((value - options.min) / (options.max - options.min));
+	}
 }
 
 function changeValue(dir) {
@@ -243,12 +264,14 @@ gl.deleteThermostat = function() {
 }
 
 gl.getTargetTemperature = function() {
-    return this.requestData('targetTemperature', function(data) {
-		return parseFloat($(data).text());
-	});
+	var t = gl.thermostat;
+	return parseFloat(t.find("target_temperature").text());
 }
 
 gl.setTargetTemperature = function(value) {
+	var t = gl.thermostat;
+	t.find("target_temperature").text(value);
+	
 	var obj = $("<target_temperature>").text(value);
 	var xml = this.parseXml(obj[0]);
 	this.uploadData('targetTemperature', xml);

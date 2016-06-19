@@ -45,10 +45,7 @@
 </div>
 
 <script type="text/javascript">
-var schedule, mode;
-
 $(document).ready(function() {
-	
 	// Create and append schedule list
 	var list = $(document.createElement("ul"));
 	
@@ -59,24 +56,20 @@ $(document).ready(function() {
 	
 	$(".schedule-overview td").append(list);
 	
-	// Set start mode (0 = overview, 1 = edit)
-	mode = 0;
-	
-	// Get the object
-	schedule = app.modules["schedule"];
-	
-	// Async request
-	gl.requestData('weekProgram', function(data) {
-		schedule.loadSwitches(-1, data);
-		if (mode == 0) $(".schedule-row").addClass("hidden-imp");
-	}, true);
+	// Register hook
+	gl.hooks.schedule = function() {
+		schedule.loadSwitches(-1);
+		
+		if (schedule.mode == 0)
+			$(".schedule-row").addClass("hidden-imp");
+	};
 });
 
 // Handle overview/edit switching
 // 0 = overview, 1 = edit
 function toggleMode() {
-	if (mode == 1) {
-		mode = 0;
+	if (schedule.mode == 1) {
+		schedule.mode = 0;
 		$("#temp-icon").removeClass("fa-floppy-o").addClass("fa-pencil");
 		$(".schedule-overview").removeClass("hidden-imp");
 		$(".schedule-headers").addClass("hidden-imp");
@@ -84,9 +77,8 @@ function toggleMode() {
 		$(".schedule-none").addClass("hidden-imp");
 		$(".schedule-row").addClass("hidden-imp");
 		$(".schedule-buttons").addClass("hidden-imp");
-	}
-	else {
-		mode = 1;
+	} else {
+		schedule.mode = 1;
 		$("#temp-icon").removeClass("fa-pencil").addClass("fa-floppy-o");
 		$(".schedule-overview").addClass("hidden-imp");
 		$(".schedule-headers").removeClass("hidden-imp");

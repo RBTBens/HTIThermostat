@@ -22,6 +22,9 @@ app.loadPage = function(page) {
 	// Check if it's something
 	if (page == "")
 		page = "index";
+		
+	// Save the location
+	app.currentPage = page;
 
 	// Fetch the data
 	$.ajax({
@@ -36,6 +39,9 @@ app.loadPage = function(page) {
 			
 			// Add the new content
 			$("#page-content-scroll").append(html);
+			
+			// Run hooks
+			gl.runHooks();
 		},
 		error: function(jq, txt, err) {
 			console.error("Error: " + err);

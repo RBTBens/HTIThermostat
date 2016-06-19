@@ -1,5 +1,5 @@
 // Add the object to our module array
-var schedule = {};
+var schedule = { mode: 0 };
 
 // Constants
 var MAX_SWITCHES = 10;
@@ -8,10 +8,14 @@ var MAX_MINUTES = 59;
 var LIST_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 // Variables
-schedule.xml = "";
 schedule.day = 0;
 schedule.copy = -1;
 schedule.switchId = 0;
+
+// Get the program object
+schedule.getProgram = function() {
+	return gl.thermostat.find("week_program");
+}
 
 // Append switches
 schedule.appendSwitch = function() {	
@@ -95,18 +99,14 @@ schedule.removeSwitch = function(id, save) {
 }
 
 // Load all switches
-schedule.loadSwitches = function(day, data) {
-	var cur = this;
-	var self = app.modules[this.id];
-	if (data)
-		self.xml = data;
-	
+schedule.loadSwitches = function(day) {
 	var d = this.day;
-	if (day && day != -1) d = day;
+	if (day >= 0)
+		d = day;
 	
-	$("switch", $("day", self.xml).eq(d)).each(function(i) {
+	$("switch", $("day", this.getProgram()).eq(d)).each(function(i) {
 		if ($(this).attr("state") == "on") {
-			cur.addSwitch($(this).text());
+			schedule.addSwitch($(this).text());
 		}
 	});
 
@@ -139,8 +139,8 @@ schedule.saveSwitches = function(force) {
 	for (i = 0; i < (MAX_SWITCHES / 2) - nights; i++) day.append($("<switch>").attr("type", "night").attr("state", "off").text("00:00"));
 	
 	// Replace existing day with our new day setting
-	$("day[name=" + LIST_DAYS[this.day] + "]", self.xml).eq(0).replaceWith(day);
-	var xml = gl.parseXml(self.xml);
+	$("day[name=" + LIST_DAYS[this.day] + "]", this.getProgram()).eq(0).replaceWith(day);
+	var xml = gl.parseXml(this.getProgram());
 	gl.setWeekProgram(xml);
 	
 	this.updateOverview();
@@ -231,7 +231,7 @@ schedule.switchDay = function(dir, mode) {
 	$(".schedule-day span").html(LIST_DAYS[this.day]);
 	
 	this.resetSwitches();
-	this.loadSwitches();
+	this.loadSwitches(-1);
 	
 	if (mode == 0) $(".schedule-row").addClass("hidden-imp");
 }
