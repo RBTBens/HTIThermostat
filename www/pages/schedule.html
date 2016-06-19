@@ -9,7 +9,10 @@
 		</colgroup>
 		<tr>
 			<td><i id="nav-icon" class="fa fa-arrow-left" onclick="gl.switchDay(-1, mode);"></i></td>
-			<td><span class="schedule-day">Monday</span><br /><a href="javascript:toggleMode()" class="button button-red">Toggle</a></td>
+			<td>
+            	<span class="schedule-day">Monday</span>
+                <a href="javascript:toggleMode()" class="button button-red">Edit switches</a>
+            </td>
 			<td><i id="nav-icon" class="fa fa-arrow-right" onclick="gl.switchDay(1, mode);"></i></td>
 		</tr>
         <tr class="schedule-overview">
@@ -59,8 +62,6 @@ $(document).ready(function() {
 		schedule.loadSwitches(data);
 		if (mode == 0) $(".schedule-row").addClass("hidden-imp");
 	}, true);
-	
-	
 });
 
 // Handle overview/edit switching

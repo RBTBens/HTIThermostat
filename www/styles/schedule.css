@@ -25,8 +25,10 @@ input[type=range] {
 }
 
 .schedule-overview ul {
-	padding:0px 5px;
+	padding:0px;
 	margin:0px;
+	height:450px;
+	background-color:#CCC;
 	list-style-type:none;
 	vertical-align:top;
 	text-align:left;
@@ -37,12 +39,25 @@ input[type=range] {
 }
 
 .schedule-overview li {
-	height:4%;
+	padding-left:3px;
+	height:4.167%;
 	margin:0px;
 	font-size:8px;
-	border-top:dashed 1px #CCC;
+	border-top:solid 1px #CCC;
 }
 
-.schedule-overview li.on {
-	background-color:#099;
+.schedule-overview li.n {
+	background-color:#BBBBC8;
+}
+
+.schedule-overview li.d {
+	background-color:#EEE;
+}
+
+.schedule-overview li.nd {
+    background: linear-gradient(#BBBBC8, #EEE);
+}
+
+.schedule-overview li.dn {
+    background: linear-gradient(#EEE, #BBBBC8);
 }

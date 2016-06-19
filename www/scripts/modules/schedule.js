@@ -78,7 +78,6 @@ obj.addSwitch = function(time) {
 	$(".schedule-none").addClass("schedule-hidden");
 	$(".schedule-headers").removeClass("schedule-hidden");
 	
-	this.updateOverview();
 	this.reassignIcons();
 	this.switchId++;
 }
@@ -110,6 +109,7 @@ obj.loadSwitches = function(data) {
 
 	// Update
 	this.validatePositions();
+	this.updateOverview();
 }
 
 obj.saveSwitches = function(force) {
@@ -138,6 +138,8 @@ obj.saveSwitches = function(force) {
 	$("day[name=" + LIST_DAYS[this.day] + "]", self.xml).eq(0).replaceWith(day);
 	var xml = gl.parseXml(self.xml);
 	gl.setWeekProgram(xml);
+	
+	this.updateOverview();
 }
 
 obj.resetSwitches = function() {
@@ -224,13 +226,11 @@ obj.switchDay = function(dir, mode) {
 	this.loadSwitches();
 	
 	if (mode == 0) $(".schedule-row").addClass("hidden-imp");
-	this.updateOverview();
 }
 
 obj.resetDay = function() {
 	this.resetSwitches();
 	this.saveSwitches(true);
-	this.updateOverview();
 }
 
 obj.toggleEdit = function() {
@@ -256,6 +256,30 @@ obj.updateOverview = function() {
 		var h = $("select", this).val();
 		ov.eq(h).addClass("on");
     });
+	
+	// Night = 0, day = 1
+	var t = 0;
+	
+	ov.each(function() {
+		if (t == 0) {
+			if ($(this).hasClass("on")) {
+				t = 1 - t;
+				$(this).attr("class", "nd");
+			}
+			else {
+				$(this).attr("class", "n");
+			}
+		}
+		else {
+			if ($(this).hasClass("on")) {
+				t = 1 - t;
+				$(this).attr("class", "dn");
+			}
+			else {
+				$(this).attr("class", "d");
+			}
+		}
+	});
 }
 
 // Construction functions
