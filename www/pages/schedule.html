@@ -10,8 +10,10 @@
 		<tr>
 			<td><i id="nav-icon" class="fa fa-arrow-left" onclick="gl.switchDay(-1, mode);"></i></td>
 			<td>
-            	<span class="schedule-day">Monday</span>
-                <a href="javascript:toggleMode()" class="button button-red">Edit switches</a>
+            	<div class="schedule-day">
+                	<span>Monday</span>
+                    <i id="temp-icon" class="fa fa-pencil temp-control" onclick="toggleMode()"></i>
+                </div>
             </td>
 			<td><i id="nav-icon" class="fa fa-arrow-right" onclick="gl.switchDay(1, mode);"></i></td>
 		</tr>
@@ -25,7 +27,7 @@
 		</tr>
 		<tr class="schedule-none schedule-hidden hidden-imp">
 			<td></td>
-			<td>Press 'Add toggle' to switches</td>
+			<td>Press 'Add switch' to start a schedule</td>
 			<td></td>
 		</tr>
 	</table>
@@ -69,6 +71,7 @@ $(document).ready(function() {
 function toggleMode() {
 	if (mode == 1) {
 		mode = 0;
+		$("#temp-icon").removeClass("fa-floppy-o").addClass("fa-pencil");
 		$(".schedule-overview").removeClass("hidden-imp");
 		$(".schedule-headers").addClass("hidden-imp");
 		$(".schedule-buttons").addClass("hidden-imp");
@@ -78,6 +81,7 @@ function toggleMode() {
 	}
 	else {
 		mode = 1;
+		$("#temp-icon").removeClass("fa-pencil").addClass("fa-floppy-o");
 		$(".schedule-overview").addClass("hidden-imp");
 		$(".schedule-headers").removeClass("hidden-imp");
 		$(".schedule-buttons").removeClass("hidden-imp");

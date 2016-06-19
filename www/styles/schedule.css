@@ -61,3 +61,9 @@ input[type=range] {
 .schedule-overview li.dn {
     background: linear-gradient(#EEE, #BBBBC8);
 }
+
+.schedule-day i {
+	position:absolute;
+	right:0;
+	margin-right:16px;
+}
